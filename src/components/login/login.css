@@ -1,0 +1,31 @@
+.form-connexion{
+    padding: 20%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.button-connexion{
+    width: 100%;
+    background-color: #29335c;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input-connexion {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.label-connexion{
+    font-size: 20px;
+}

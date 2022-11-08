@@ -1,0 +1,15 @@
+.main-footer {
+    color: white;
+    background-color: #29335c;
+    padding-top: 3em;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.row{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
