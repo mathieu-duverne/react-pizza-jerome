@@ -9,7 +9,8 @@ const AutoComplete = () => {
   const [pizzas, setPizzas] = useState([]);
   const [text, setText] = useState("");
   const [display_pizzas, setDisplay] = useState([]);
-
+  const [id_selected, setId_selected] = useState([]);
+  const [myStyle, setMyStyle] = useState({});
 
 
   useEffect(()=>{
@@ -43,10 +44,19 @@ const AutoComplete = () => {
     // set le text de la search bar
     setText(text)
   }
-
   function handleClick(id_pizza_selected) {
-    console.log(id_pizza_selected)
+    // setId_selected(id_pizza_selected);
+    //append id_pizza_selected to id_selected
+    // si id_selected ne contient pas deja l'id de la pizza selectionnée
+    if (!id_selected.includes(id_pizza_selected)) {
+      setId_selected([...id_selected, id_pizza_selected]);}
+      setMyStyle((prevState) => ({
+        ...myStyle,
+        [id_pizza_selected]: !prevState[id_pizza_selected]
+      }));
+      // console.log(id_pizza_selected)
 };
+  console.log(id_selected)
 
   return (
     <div className="all_container">
@@ -69,7 +79,15 @@ const AutoComplete = () => {
             {display_pizzas.map(display_pizzas => (
               <React.Fragment >
                 <div onClick={() => handleClick(display_pizzas.id)}
-                     className="div-card-pizzas-ingredient">
+
+                     className="div-card-pizzas-ingredient"
+                     key={display_pizzas.id}
+                     style={{
+                       boxShadow: myStyle[`${display_pizzas.id}`]
+                         ? "4px 3px 8px 0px rgba(1, 156, 48, 0.3)"
+                         : "initial"
+                     }}
+                >
                   <div className="div-display-pizzas">
                     <label>{display_pizzas.attributes.nom}</label>
                   </div>
