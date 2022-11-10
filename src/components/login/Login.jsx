@@ -78,11 +78,26 @@ const Login = () => {
         const idUser = data.user.id;
         console.log(idUser)
 
-        // axios.get('https://aquoipizza.com/api/users?populate=* ',{
-        //   headers: {
-        //     Authorization: `Bearer ${idUser}`,//  when user login there will be a jwt in reponse so you can pass user jwt in here 
-        // },
-        // })
+        const responseRole = axios.get(`${API}/users/me?populate=*`,{
+          headers: {
+            Authorization: `Bearer ${token}`,//  when user login there will be a jwt in reponse so you can pass user jwt in here 
+          }
+        });
+
+        const dataRole = await responseRole;
+
+        if (dataRole?.error) {
+
+          throw data?.error
+        } else if(dataRole.data.role.name == "utilisateur"){
+          /////////////////////////////////////////////// TOUTES LES CONDITIONS DE REDIRECTION A SET UP ////////////////////////////////
+          navigate("/reservation");
+          console.log('first')
+        } else {
+
+          console.log(dataRole)
+        }
+
       }
     } catch (error) {
       console.error(error);
