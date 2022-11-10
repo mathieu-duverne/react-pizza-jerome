@@ -5,15 +5,15 @@
     flex-direction: column;
 } */
 
-.form-inscription{
-    padding: 20%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
+    /* .form-inscription{
+        padding: 20%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    } */
 
-.button-inscription{
-    width: 100%;
+.ant-btn{
+    width: 25%;
     background-color: #29335c;
     color: white;
     padding: 14px 20px;
@@ -23,7 +23,7 @@
     cursor: pointer;
 }
 
-.input-inscription {
+.ant-input {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

@@ -91,7 +91,7 @@ const SignUp = () => {
               >
                 <Form.Item
                     className="input-inscription"
-                    label="Username"
+                    label="Identifiant"
                     name="username"
                     rules={[
                       {
@@ -100,7 +100,7 @@ const SignUp = () => {
                       },
                     ]}
                 >
-                  <Input placeholder="Username" />
+                  <Input placeholder="Identifiant" />
                 </Form.Item>
                 <Form.Item
                     className="input-inscription"
@@ -118,11 +118,11 @@ const SignUp = () => {
 
                 <Form.Item
                     className="input-inscription"
-                    label="Password"
+                    label="Mot de passe"
                     name="password"
                     rules={[{ required: true }]}
                 >
-                  <Input.Password placeholder="Password" />
+                  <Input.Password placeholder="Mot de passe" />
                 </Form.Item>
 
                 <Form.Item>
@@ -131,7 +131,7 @@ const SignUp = () => {
                       htmlType="submit"
                       className="button-inscription"
                   >
-                    Submit {isLoading && <Spin size="small" />}
+                    Inscription {isLoading && <Spin size="small" />}
                   </Button>
                 </Form.Item>
               </Form>

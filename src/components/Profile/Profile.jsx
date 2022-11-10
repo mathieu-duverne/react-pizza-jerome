@@ -39,7 +39,9 @@ const Profile = () => {
     }
 
     return (
+
         <Card className="profile_page_card">
+            <h1 className="titre-profil">Modifier votre profil</h1>
             <Form
                 layout="vertical"
                 initialValues={{

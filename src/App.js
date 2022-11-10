@@ -29,7 +29,7 @@ function App() {
                 <Route path="/inscription" element={<SignUp />} />
                 <Route
                     path="/profile"
-                    element={getToken() ? <Profile /> : <Navigate to="/signin" />}
+                    element={getToken() ? <Profile /> : <Navigate to="/connexion" />}
                 />
                 <Route path='/connexion' element={<Login />} />
                 <Route path="/list" element={<PersonList />} />

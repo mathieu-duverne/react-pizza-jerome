@@ -19,6 +19,7 @@ import { useAuthContext } from "../../context/AuthContext";
 // import useScreenSize from "../../hooks/useScreenSize";
 import { API } from "../constant";
 import { setToken } from "../helpers";
+import "../login/login.css";
 
 // const getRoleLog  = (ctx, next) {
 
@@ -74,49 +75,14 @@ const Login = () => {
         console.log(data)
 
         const token = data.jwt;
+        const idUser = data.user.id;
+        console.log(idUser)
 
-        // Request API.
-        axios
-          .get('http://localhost:1337/api/users-permissions/roles/:id', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then(response => {
-            // Handle success.
-            console.log('Data: ', response.data);
-          })
-          .catch(error => {
-            // Handle error.
-            console.log('An error occurred:', error.response);
-          });
-        ///////////////////////////////// POPULATE POPULATE //////////////////////////////////////
-        ///////////////////////////////// RELATIÇON AVEC LES TABLES //////////////////////////////
-        ///////////////////////////////// POPULATE POPULATE //////////////////////////////////////
-
-        // axios.get(`${API/}/plugin::users-permissions.user`)
-        // module.exports = {
-        //   register ({ strapi }) {
-        //     strapi.service('plugin::users-permissions.user').fetchAuthenticatedUser = (id) => {
-        //       return strapi
-        //         .query('plugin::users-permissions.user')
-        //         .findOne({ where: { id }, populate: ['role', 'teams.avatar'] })
-        //     }
-        //   }
-        // }
-
-        // const userRole = axios.get(`${API}/users-permissions/roles/:id`,{
-        //   id: data.user.id  
-        // });
-        // const dataa = await userRole.json();
-        // console.log(dataa)
-
-        // const isRole = await fetch(`${API}/users-permissions/roles`, {
-        //   method: "GET",
+        // axios.get('https://aquoipizza.com/api/users?populate=* ',{
+        //   headers: {
+        //     Authorization: `Bearer ${idUser}`,//  when user login there will be a jwt in reponse so you can pass user jwt in here 
+        // },
         // })
-        // const toto = await isRole.json();
-        // console.log(toto)
-        // navigate("/reservation", { replace: true });
       }
     } catch (error) {
       console.error(error);
@@ -128,7 +94,7 @@ const Login = () => {
 
   return (
       <Fragment>
-        <Card title="SignIn">
+        <Card title="Connexion">
           {error ? (
               <Alert
                   className="alert_error"
@@ -139,6 +105,7 @@ const Login = () => {
               />
           ) : null}
           <Form
+          className="form-connexion"
               name="basic"
               layout="vertical"
               onFinish={onFinish}
@@ -147,6 +114,7 @@ const Login = () => {
             <Form.Item
                 label="Email"
                 name="email"
+                className="input-connexion"
                 rules={[
                   {
                     required: true,
@@ -160,6 +128,7 @@ const Login = () => {
             <Form.Item
                 label="Password"
                 name="password"
+                className="input-password"
                 rules={[{ required: true }]}
             >
               <Input.Password placeholder="Password" />
@@ -169,14 +138,14 @@ const Login = () => {
               <Button
                   type="primary"
                   htmlType="submit"
-                  className="login_submit_btn"
+                  className="button-connexion"
               >
                 Login {isLoading && <Spin size="small" />}
               </Button>
             </Form.Item>
           </Form>
           <Typography.Paragraph className="form_help_text">
-            New to Social Cards? <Link to="/signup">Sign Up</Link>
+            Pas de compte ? <Link to="/inscription">inscription</Link>
           </Typography.Paragraph>
         </Card>
       </Fragment>
