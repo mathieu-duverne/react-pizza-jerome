@@ -6,50 +6,62 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { removeToken } from "./helpers";
 
+
+
+import {useRef} from 'react';
+import {FaBars, FaTimes} from "react-icons/fa";
+import "../style/nav.css";
+
 const NavBar = () => {
     const { user } = useAuthContext();
     const navigate = useNavigate();
 
+
+    const navRef = useRef();
+
+    const showNavbar = () => {
+        navRef.current.classList.toggle("responsive_nav");
+    }
+
     const handleLogout = () => {
         removeToken();
-        navigate("/signin", { replace: true });
+        navigate("/connexion", { replace: true });
     };
 
+    
+
     return (
-        <Space className="header_space">
-            <Button className="header_space_brand" href="/" type="link">
-                <CgWebsite size={64} />
-            </Button>
-            <Space className="auth_buttons">
+        <header>
+            <h3>Pizza-jérome</h3>
+            <nav ref={navRef}>
+                <a href='./'>Accueil</a>
+                <a href='/reservation'>Réservation</a>
                 {user ? (
-                    <>
-                        <Button className="auth_button_login" href="/profile" type="link">
-                            {user.username}
-                        </Button>
-                        <Button
+                    <> 
+                        <a href="/profile">{user.username}</a>
+                        <a
                             className="auth_button_signUp"
                             type="primary"
                             onClick={handleLogout}
                         >
                             Logout
-                        </Button>
+                        </a>
                     </>
-                ) : (
-                    <>
-                        <Button className="auth_button_login" href="/signin" type="link">
-                            Login
-                        </Button>
-                        <Button
-                            className="auth_button_signUp"
-                            href="/signup"
-                            type="primary"
-                        >
-                            SignUp
-                        </Button>
-                    </>
+                ) :( 
+                <>
+                    <a href='/connexion'>Connexion</a>
+                    <a href='/inscription'>inscription</a>
+                </>
                 )}
-            </Space>
-        </Space>
+                <button className='nav-btn nav-close-btn' onClick={showNavbar}>
+                    <FaTimes />
+                </button>
+            </nav>
+            <button className='nav-btn' onClick={showNavbar}>
+                <FaBars />
+            </button>
+         </header>   
+
     );
 };
 

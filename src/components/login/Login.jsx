@@ -14,10 +14,25 @@ import {
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
 import { useAuthContext } from "../../context/AuthContext";
 // import useScreenSize from "../../hooks/useScreenSize";
 import { API } from "../constant";
 import { setToken } from "../helpers";
+
+// const getRoleLog  = (ctx, next) {
+
+//   const { id } = ctx.params;
+
+//   return await strapi.query("plugin::users-permissions.user").findOne({
+
+//     where: { id },
+
+//     populate: ["role"],
+
+//   });
+
+// }
 
 const Login = () => {
   // const { isDesktopView } = useScreenSize();
@@ -56,7 +71,52 @@ const Login = () => {
 
         message.success(`Welcome back ${data.user.username}!`);
 
-        navigate("/profile", { replace: true });
+        console.log(data)
+
+        const token = data.jwt;
+
+        // Request API.
+        axios
+          .get('http://localhost:1337/api/users-permissions/roles/:id', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then(response => {
+            // Handle success.
+            console.log('Data: ', response.data);
+          })
+          .catch(error => {
+            // Handle error.
+            console.log('An error occurred:', error.response);
+          });
+        ///////////////////////////////// POPULATE POPULATE //////////////////////////////////////
+        ///////////////////////////////// RELATIÇON AVEC LES TABLES //////////////////////////////
+        ///////////////////////////////// POPULATE POPULATE //////////////////////////////////////
+
+        // axios.get(`${API/}/plugin::users-permissions.user`)
+        // module.exports = {
+        //   register ({ strapi }) {
+        //     strapi.service('plugin::users-permissions.user').fetchAuthenticatedUser = (id) => {
+        //       return strapi
+        //         .query('plugin::users-permissions.user')
+        //         .findOne({ where: { id }, populate: ['role', 'teams.avatar'] })
+        //     }
+        //   }
+        // }
+
+        // const userRole = axios.get(`${API}/users-permissions/roles/:id`,{
+        //   id: data.user.id  
+        // });
+        // const dataa = await userRole.json();
+        // console.log(dataa)
+
+        // const isRole = await fetch(`${API}/users-permissions/roles`, {
+        //   method: "GET",
+        // })
+        // const toto = await isRole.json();
+        // console.log(toto)
+        // navigate("/reservation", { replace: true });
       }
     } catch (error) {
       console.error(error);
