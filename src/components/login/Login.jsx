@@ -93,6 +93,8 @@ const Login = () => {
           /////////////////////////////////////////////// TOUTES LES CONDITIONS DE REDIRECTION A SET UP ////////////////////////////////
           navigate("/reservation");
           console.log('first')
+        } else if (dataRole.data.role.name == "admin"){
+          navigate("/admin")
         } else {
 
           console.log(dataRole)

@@ -14,6 +14,7 @@ import {
 import React from 'react';
 import axios from 'axios';
 import { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { setToken } from "./helpers";
 import "../style/inscription.css";
 import { useAuthContext } from "../context/AuthContext";
@@ -27,6 +28,8 @@ const SignUp = () => {
   // const navigate = useNavigate();
 
   const { setUser } = useAuthContext();
+
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,7 +60,7 @@ const SignUp = () => {
 
         message.success(`Bienvenue ${data.user.username} !`);
 
-        // navigate("/profile", { replace: true });
+        navigate("/connexion", { replace: true });
       }
     } catch (error) {
       console.error(error);
