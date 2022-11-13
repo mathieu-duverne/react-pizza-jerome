@@ -41,6 +41,8 @@ const Login = () => {
 
   const { setUser } = useAuthContext();
 
+  const { setRole } = useAuthContext();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [error, setError] = useState("");
@@ -72,11 +74,11 @@ const Login = () => {
 
         message.success(`Welcome back ${data.user.username}!`);
 
-        console.log(data)
+        // console.log(data)
 
         const token = data.jwt;
         const idUser = data.user.id;
-        console.log(idUser)
+        // console.log(idUser)
 
         const responseRole = axios.get(`${API}/users/me?populate=*`,{
           headers: {
@@ -85,7 +87,13 @@ const Login = () => {
         });
 
         const dataRole = await responseRole;
-        console.log(dataRole)
+        console.log(dataRole.data.role.name)
+        const roleStorage = dataRole.data.role.name
+
+        // set the role of user
+        setRole(roleStorage)
+        // console.log(setRole)
+
         if (dataRole?.error) {
 
           throw data?.error
@@ -93,7 +101,10 @@ const Login = () => {
           /////////////////////////////////////////////// TOUTES LES CONDITIONS DE REDIRECTION A SET UP ////////////////////////////////
           navigate("/reservation");
           console.log('first')
-        } else {
+        } else if (dataRole.data.role.name == "admin"){
+          navigate('/admin')
+        }
+         else {
           
           console.log(dataRole)
         }

@@ -38,7 +38,7 @@ const NavBar = () => {
                 <a href='./'>Accueil</a>
                 <a href='/reservation'>Réservation</a>
                 {user ? (
-                    <> 
+                    <> {console.log(user)}
                         <a href="/profile">{user.username}</a>
                         <a
                             // style cursor pointer

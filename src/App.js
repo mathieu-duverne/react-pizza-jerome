@@ -13,6 +13,7 @@ import SignUp from './components/PersonAdd';
 import { useState } from 'react';
 import { getToken } from "./components/helpers";
 import AutoComplete  from './components/autocomplete/AutoComplete';
+import Admin from './components/admin/Admin';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
                 <Route path='/connexion' element={<Login />} />
                 <Route path="/list" element={<PersonList />} />
                 <Route path="/reservation" element={<Booking />} />
+                <Route path='/admin' element={<Admin />} />
                 {/* <AuthenticatedRoute path="/" component={Accueil} /> */}
             </Routes>
             <Footer />
