@@ -1,0 +1,37 @@
+.form-connexion{
+    /* padding: 20%;
+    display: flex;
+    align-items: center;
+    flex-direction: column; */
+    padding-top: 5%;
+}
+
+.button-connexion{
+    width: 25%;
+    background-color: #29335c;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ant-input {
+    width: 25%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.ant-card-head-title{
+    padding: 1.5%;
+    font-size: 30px;
+}
+
+.label-connexion{
+    font-size: 20px;
+}
