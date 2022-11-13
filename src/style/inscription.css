@@ -1,12 +1,18 @@
-.form-connexion{
-    /* padding: 20%;
+/* .form-group{
+
     display: flex;
     align-items: center;
-    flex-direction: column; */
-    padding-top: 5%;
-}
+    flex-direction: column;
+} */
 
-.button-connexion{
+    /* .form-inscription{
+        padding: 20%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    } */
+
+.ant-btn{
     width: 25%;
     background-color: #29335c;
     color: white;
@@ -18,20 +24,11 @@
 }
 
 .ant-input {
-    width: 25%;
+    width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
-
-.ant-card-head-title{
-    padding: 1.5%;
-    font-size: 30px;
-}
-
-.label-connexion{
-    font-size: 20px;
-}
+  }

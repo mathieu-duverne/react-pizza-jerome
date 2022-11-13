@@ -1,114 +1,170 @@
-import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
-// import AuthContext from '../../context/AuthProvider';
-// import axios from 'axios';
-import axios from '../../api/axios'
-const LOGIN_URL = '/api/auth/local';
+
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  message,
+  Row,
+  Spin,
+  Typography,
+} from "antd";
+import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
+import { useAuthContext } from "../../context/AuthContext";
+// import useScreenSize from "../../hooks/useScreenSize";
+import { API } from "../constant";
+import { setToken } from "../helpers";
+import "../login/login.css";
+
+// const getRoleLog  = (ctx, next) {
+
+//   const { id } = ctx.params;
+
+//   return await strapi.query("plugin::users-permissions.user").findOne({
+
+//     where: { id },
+
+//     populate: ["role"],
+
+//   });
+
+// }
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
-  const userRef = useRef();
-  const errRef = useRef();
+  // const { isDesktopView } = useScreenSize();
+  const navigate = useNavigate();
 
-  const [user, setUser] = useState('');
-  const [pdw, setPdw] = useState('');
-  const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
+  const { setUser } = useAuthContext();
 
-  useEffect(() => {
-    userRef.current.focus();
-  },[])
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    setErrMsg('');
-  },[user ,pdw])
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // console.log(user, pdw);
-
+  const onFinish = async (values) => {
+    setIsLoading(true);
     try {
-      const response = await axios.post(LOGIN_URL,
-        // JSON.stringify({user, pdw}),
-        {
-          identifier : user,
-          password: pdw,
-        }
-      );
-      console.log(JSON.stringify(response?.data));
-      console.log(user, pdw);
+      const value = {
+        identifier: values.email,
+        password: values.password,
+      };
+      const response = await fetch(`${API}/auth/local`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(value),
+      });
 
-      // console.log(JSON.stringify(response));
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({user, pdw, roles, accessToken});
-      // console.log(accessToken)
-      setUser('');
-      setPdw('');
-      setSuccess(true);
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-      } else if (err.response?.status === 400) {
-        setErrMsg('Missing Username or password');
-      } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized');
+      const data = await response.json();
+      if (data?.error) {
+        throw data?.error;
       } else {
-        setErrMsg('Login Failed');
-      }
-      errRef.current.focus();
-    }
+        // set the token
+        setToken(data.jwt);
 
-  }
+        // set the user
+        setUser(data.user);
+
+        message.success(`Welcome back ${data.user.username}!`);
+
+        console.log(data)
+
+        const token = data.jwt;
+        const idUser = data.user.id;
+        console.log(idUser)
+
+        const responseRole = axios.get(`${API}/users/me?populate=*`,{
+          headers: {
+            Authorization: `Bearer ${token}`,//  when user login there will be a jwt in reponse so you can pass user jwt in here 
+          }
+        });
+
+        const dataRole = await responseRole;
+        console.log(dataRole)
+        if (dataRole?.error) {
+
+          throw data?.error
+        } else if(dataRole.data.role.name == "utilisateur"){
+          /////////////////////////////////////////////// TOUTES LES CONDITIONS DE REDIRECTION A SET UP ////////////////////////////////
+          navigate("/reservation");
+          console.log('first')
+        } else {
+          
+          console.log(dataRole)
+        }
+
+      }
+    } catch (error) {
+      console.error(error);
+      setError(error?.message ?? "Something went wrong!");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-  
-    <>
-    {success ? (
-      <section>
-        <h1>Vous êtes connecter !</h1>
-        <br />
-        <p>
-          <a href="#">Accueil</a>
-        </p>
-      </section>
-    ): (
-      <section>
-        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-        <h1>Connexion</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="username">Identifiant:</label>
-          <input 
-            type="text"
-            id="username"
-            ref={userRef}
-            autoComplete="off"
-            onChange={(e) => setUser(e.target.value)}
-            value={user}
-            required
-          />
-          <label htmlFor="password">password:</label>
-          <input 
-            type="password"
-            id="password"
-            onChange={(e) => setPdw(e.target.value)}
-            value={pdw}
-            required
-          />
-          <button>Connexion</button>
-        </form>
-        <p>
-          Inscription
-          <span className='line'>
-          {/*Root link*/}
-          <a href="#">Inscription</a>
-          </span>
-        </p>
-      </section>
-    )}
-    </>
+      <Fragment>
+        <Card title="Connexion">
+          {error ? (
+              <Alert
+                  className="alert_error"
+                  message={error}
+                  type="error"
+                  closable
+                  afterClose={() => setError("")}
+              />
+          ) : null}
+          <Form
+          className="form-connexion"
+              name="basic"
+              layout="vertical"
+              onFinish={onFinish}
+              autoComplete="off"
+          >
+            <Form.Item
+                label="Email"
+                name="email"
+                className="input-connexion"
+                rules={[
+                  {
+                    required: true,
+                    type: "email",
+                  },
+                ]}
+            >
+              <Input placeholder="Email address" />
+            </Form.Item>
 
-  )
-}
+            <Form.Item
+                label="Password"
+                name="password"
+                className="input-password"
+                rules={[{ required: true }]}
+            >
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="button-connexion"
+              >
+                Login {isLoading && <Spin size="small" />}
+              </Button>
+            </Form.Item>
+          </Form>
+          <Typography.Paragraph className="form_help_text">
+            Pas de compte ? <Link to="/inscription">inscription</Link>
+          </Typography.Paragraph>
+        </Card>
+      </Fragment>
+  );
+};
 
 export default Login;
