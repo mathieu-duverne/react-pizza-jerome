@@ -8,9 +8,17 @@ import { removeToken } from "./helpers";
 import {useRef, useEffect, useState} from 'react';
 import {FaBars, FaTimes} from "react-icons/fa";
 import "../style/nav.css";
-
+import { getToken } from "./helpers";
 const NavBar = () => {
+    console.log(getToken());
+    // console.log(first)
+    // console.log(role)
+
+
     const { user } = useAuthContext();
+    console.log(user)
+    const { role } = useAuthContext();
+    console.log(role)
     const navigate = useNavigate();
     const [count_items, setCount_items] = useState("");
     const [isActive, setIsActive] = useState(false);

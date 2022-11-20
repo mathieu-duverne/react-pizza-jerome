@@ -1,4 +1,3 @@
-
 import {
   Alert,
   Button,
@@ -16,27 +15,12 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { useAuthContext } from "../../context/AuthContext";
-// import useScreenSize from "../../hooks/useScreenSize";
 import { API } from "../constant";
 import { setToken } from "../helpers";
 import "../login/login.css";
 
-// const getRoleLog  = (ctx, next) {
-
-//   const { id } = ctx.params;
-
-//   return await strapi.query("plugin::users-permissions.user").findOne({
-
-//     where: { id },
-
-//     populate: ["role"],
-
-//   });
-
-// }
-
 const Login = () => {
-  // const { isDesktopView } = useScreenSize();
+
   const navigate = useNavigate();
 
   const { setUser } = useAuthContext();
@@ -64,19 +48,15 @@ const Login = () => {
       if (data?.error) {
         throw data?.error;
       } else {
-        // set the token
-        setToken(data.jwt);
 
-        // set the user
+        setToken(data.jwt);
         setUser(data.user);
+        // console.log(data.user);
 
         message.success(`Welcome back ${data.user.username}!`);
 
-        console.log(data)
-
         const token = data.jwt;
         const idUser = data.user.id;
-        console.log(idUser)
 
         const responseRole = axios.get(`${API}/users/me?populate=*`,{
           headers: {
@@ -85,16 +65,18 @@ const Login = () => {
         });
 
         const dataRole = await responseRole;
-        console.log(dataRole)
+        // setUser(dataRole.data.role );
+        // console.log(dataRole)
+
         if (dataRole?.error) {
 
           throw data?.error
         } else if(dataRole.data.role.name == "utilisateur"){
-          /////////////////////////////////////////////// TOUTES LES CONDITIONS DE REDIRECTION A SET UP ////////////////////////////////
           navigate("/reservation");
-          console.log('first')
-        } else {
-          
+          // console.log('first')
+        } else if (dataRole.data.role.name == "admin"){
+          navigate("/admin");
+        } else {  
           console.log(dataRole)
         }
 

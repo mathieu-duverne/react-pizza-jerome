@@ -20,8 +20,7 @@ import Dsp_Planning  from './components/Display_planning';
 function App() {
 
 
-    console.log(getPizzas());
-    
+    // console.log(getPizzas());
     return (
 
         <div className="App">

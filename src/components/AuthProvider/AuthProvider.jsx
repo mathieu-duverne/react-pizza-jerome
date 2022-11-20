@@ -4,12 +4,28 @@ import { AuthContext } from "../../context/AuthContext";
 import { API, BEARER } from "../constant";
 import { useEffect } from "react";
 import { getToken } from "../helpers";
+import axios from "../../api/axios";
 
 const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const [role, setRole] = useState();
 
     const authToken = getToken();
+
+    const fetchRoleUser = async (token) => {
+
+        const responseRole = axios.get(`${API}/users/me?populate=*`,{
+            headers: {
+              Authorization: `Bearer ${token}`,//  when user login there will be a jwt in reponse so you can pass user jwt in here 
+            }
+          });
+  
+          const dataRole = await responseRole;
+        //   console.log(dataRole.data.role);
+        //   setRole = dataRole.data.role;
+          setRole(dataRole.data.role);
+    }
 
     const fetchLoggedInUser = async (token) => {
         setIsLoading(true);
@@ -35,12 +51,13 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (authToken) {
             fetchLoggedInUser(authToken);
+            fetchRoleUser(authToken);
         }
     }, [authToken]);
 
     return (
         <AuthContext.Provider
-            value={{ user: userData, setUser: handleUser, isLoading }}
+            value={{ user: userData, role: role, setUser: handleUser, isLoading }}
         >
             {children}
         </AuthContext.Provider>

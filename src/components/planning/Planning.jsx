@@ -5,7 +5,7 @@ import { useState, useEffect} from 'react';
 import "./Planning.css"
 import { useNavigate } from "react-router-dom";
 
-const Planning = (pizzas) => {
+const Planning = () => {
 	
 	const navigate = useNavigate();	
 	let retrievedObject = localStorage.getItem('pizzas');
