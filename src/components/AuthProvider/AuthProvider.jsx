@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
           const dataRole = await responseRole;
         //   console.log(dataRole.data.role);
         //   setRole = dataRole.data.role;
-          setRole(dataRole.data.role);
+          setRole(dataRole.data.role.name);
     }
 
     const fetchLoggedInUser = async (token) => {

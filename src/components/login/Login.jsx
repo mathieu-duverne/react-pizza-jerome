@@ -65,8 +65,6 @@ const Login = () => {
         });
 
         const dataRole = await responseRole;
-        // setUser(dataRole.data.role );
-        // console.log(dataRole)
 
         if (dataRole?.error) {
 

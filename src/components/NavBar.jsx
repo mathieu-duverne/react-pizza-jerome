@@ -10,15 +10,11 @@ import {FaBars, FaTimes} from "react-icons/fa";
 import "../style/nav.css";
 import { getToken } from "./helpers";
 const NavBar = () => {
-    console.log(getToken());
-    // console.log(first)
-    // console.log(role)
-
-
+    
     const { user } = useAuthContext();
     console.log(user)
     const { role } = useAuthContext();
-    console.log(role)
+
     const navigate = useNavigate();
     const [count_items, setCount_items] = useState("");
     const [isActive, setIsActive] = useState(false);
@@ -40,8 +36,6 @@ const NavBar = () => {
         loadCart();
     }, [])
 
-
-
     const navRef = useRef();
 
     const showNavbar = () => {
@@ -58,12 +52,6 @@ const NavBar = () => {
         // onclick display a list of selected pizza
         setIsActive(current => !current);
     }
-        // // display pizzas in local storage if there is any
-        // if (localStorage.getItem('pizzas') != null) {
-        //     let retrievedObject = localStorage.getItem('pizzas');
-        //     let parsedObject = JSON.parse(retrievedObject);
-        //     console.log(parsedObject.length);
-        // }
 
     return (
         <header>
@@ -71,7 +59,15 @@ const NavBar = () => {
             <nav ref={navRef}>
                 <a href='./'>Accueil</a>
                 <a href='/reservation'>Réservation</a>
+                {role == "admin" ? (
+                    <>
+                    <a href="/admin">Admin</a>
+                    </>
+                ) : (
+                    console.log('nop')
+                )}
                 {user ? (
+
                     <> 
                         <a href="/profile">{user.username}</a>
                         <a
