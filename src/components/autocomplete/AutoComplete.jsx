@@ -3,9 +3,9 @@ import axios from 'axios';
 import { API } from "../constant";
 import { useNavigate } from "react-router-dom";
 import { setPizzas } from "../helpers";
-
+import { getPizzas } from "../helpers";
+import { removePizzas } from "../helpers";
 import { useState, useEffect} from 'react';
-
 import "./AutoComplete.css"
 
 const AutoComplete = () => {
@@ -15,21 +15,55 @@ const AutoComplete = () => {
   const [display_pizzas, setDisplay] = useState([]);
   const [display_pizzas_selected, setDisplay_pizzas_selected] = useState([]);
   const [success_message, set_success_message] = useState("");
-  const navigate = useNavigate();
 
   useEffect(()=>{
     const loadPizzas = async () => {
     const response = await axios.get(`${API}/pizzas?populate=*`);	
-          setPizza(response.data.data)
-          setDisplay(response.data.data);
+    structured_pizzas(response.data.data);
     }
     loadPizzas();
-    if (localStorage.getItem('pizzas') != null) {
-      let retrievedObject = localStorage.getItem('pizzas');
-      setDisplay_pizzas_selected(JSON.parse(retrievedObject));
+    if (getPizzas() != null) {
+      setDisplay_pizzas_selected(JSON.parse(getPizzas()));
     }
 
   },[])
+
+  function structured_pizzas(data){
+    let pizzas = [];
+    // copy the data without same pizza 
+    data.map(pizza => {
+      let ingredients = [];
+      pizza.attributes.ingredients.data.map(ingredient => {
+        ingredients.push(ingredient.attributes.nom_ingredient);
+      })
+      let pizza_structured = {
+        "id": [pizza.id],
+        "name": pizza.attributes.nom,
+        "price": [pizza.attributes.prix],
+        "size": [pizza.attributes.taille],
+        "ingredients": ingredients
+      }
+      if (pizzas.filter(pizza => pizza.name == pizza_structured.name).length == 0) {
+        pizzas.push(pizza_structured);
+      }
+    })
+    let res = merge_pizza(pizzas, data);
+    setPizza(res);
+    setDisplay(res);
+  }
+
+  function merge_pizza(pizzas, data){
+    pizzas.map(pizza => {
+      data.map(pizza2 => {
+        if (pizza.name == pizza2.attributes.nom && pizza.id != pizza2.id) {
+          pizza.id.push(pizza2.id);
+          pizza.price.push(pizza2.attributes.prix);
+          pizza.size.push(pizza2.attributes.taille);
+        }
+    })
+})
+return pizzas
+}
 
   // ---------- COMPOSANT AUTOCOMPLETE ------------ //
   const onChangeHandler = (text) => {
@@ -40,7 +74,7 @@ const AutoComplete = () => {
       // Fonction du filtre de react
       matches = pizzas.filter(pizza => {
         const regex = new RegExp(`${text}`, "gi");
-        return pizza.attributes.nom.match(regex)
+        return pizza.name.match(regex)
       })
       // set le display qui change en fonction de la recherche
       setDisplay(matches);
@@ -55,48 +89,45 @@ const AutoComplete = () => {
   }
 
 // ---------- COMPOSANT CLICK ON PIZZA (change style, create list of selected pizza) ------------ //
+const [test, setTest] = useState([]); 
   const handleClick = (id) => {
-
-    // creer une liste des id des pizzas selectionnées a partir de display_pizzas_selected
-    const lstid = display_pizzas_selected.map(pizza => pizza.id);
-
-    if (!lstid.includes(id)) {
-      // setId_selected([...id_selected, id_pizza_selected]);
-      display_pizzas_selected.push({id, quantity: 1});
+    let quantitys = 0;
+   // map pizzas tout les id de pizzas
+  const lstid = display_pizzas_selected.map(pizza => pizza.id);
+  if (!lstid.includes(id)) {
+    pizzas.map(pizza => {
+      pizza.id.map((id_pizza) => {
+        // si l'id de la pizza est dans la liste des id des pizzas selectionnées
+        if (id_pizza == id) {
+          display_pizzas_selected.push({
+            "id" : id,
+            "name" : pizza.name,
+            "taille" : pizza.size[pizza.id.indexOf(id)],
+            "prix" : pizza.price[pizza.id.indexOf(id)],
+            "quantity" : 1
+          }); 
+        }
+      })
+    }) 
     } else {
-		const index = display_pizzas_selected.findIndex((item) => item.id === id);
-		display_pizzas_selected[index].quantity += 1;	
-	}   
-    refresh_lst_selected(display_pizzas_selected);
-    
-};
+		  const index = display_pizzas_selected.findIndex((item) => item.id === id);
+          display_pizzas_selected[index].quantity += 1;	
+          quantitys += 1;
+	    }
+      refresh_lst_selected(display_pizzas_selected);
+      console.log(display_pizzas_selected);
+  }
 
 const refresh_lst_selected = (display_pizzas_right) => {
-  let matches = {};
-
-    if (display_pizzas_right.length > 0) {
-      // make a list of if of lsttest object
-      const lstid = display_pizzas_right.map(pizza => pizza.id);
-
-      matches = pizzas.filter(pizza => {
-        return lstid.includes(pizza.id)
-      })
-    } else {
-      setDisplay_pizzas_selected([]);
-      // localStorage.setItem('pizzas', JSON.stringify([]));
-      // delete localStorage.pizzas;
-			localStorage.removeItem('pizzas');
-      
-      }
-    
-    if (matches.length > 0) { 
-      // add a quantity 1 to each pizza in matches object
-      matches = matches.map((item) => {
-        const quantity = display_pizzas_right.find((item2) => item2.id === item.id).quantity;
-        return {...item, quantity: quantity}
-      })
-      setDisplay_pizzas_selected(matches);
+    // match et return les pizzas selectionnées
+    let matches = [];
+    matches = display_pizzas_right.map(pizza => {
+      const regex = new RegExp(`${pizza.name}`, "gi");
+      return pizza
     }
+    )
+    // set le display qui change en fonction de la recherche
+    setDisplay_pizzas_selected(matches);
 }
 
 // create a function ClickLessQuantity to decrease quantity of pizza selected
@@ -106,21 +137,25 @@ const ClickLessQuantity = (id) => {
   // if the quantity is > 1, decrease the quantity
   if (display_pizzas_selected[index].quantity > 1) {
     display_pizzas_selected[index].quantity -= 1;
-
   }
   // else remove the pizza from the list
   else {
     display_pizzas_selected.splice(index, 1);
-
   }
   refresh_lst_selected(display_pizzas_selected)
+  if (display_pizzas_selected.length == 0) {
+    removePizzas();
+  }
 }
 
 const ClickSuppr = (id) => {
-  // find the index of the pizza selected
+  // find the index of the pizza sel
   const index = display_pizzas_selected.findIndex((item) => item.id === id);
   display_pizzas_selected.splice(index, 1);
   refresh_lst_selected(display_pizzas_selected)
+  if (display_pizzas_selected.length == 0) {
+    removePizzas();
+  }
 }
 
 const ClickPlusQuantity = (id) => {
@@ -133,19 +168,18 @@ const ClickPlusQuantity = (id) => {
 }
 
 const ClickSaveSelectedPizza = () => {
-  // localStorage.setItem('pizzas', JSON.stringify(display_pizzas_selected));
   if (display_pizzas_selected.length > 0) {
     setPizzas(display_pizzas_selected);
     set_success_message("Vos pizzas ont bien été sauvegardées");
     setTimeout(() => {
-      set_success_message("");
-      navigate("/planning");
+      window.location.href = "/planning"; 
     }, 1000);
   }
   else {
+    removePizzas();
+    //  remove item pizzas into local storage
     set_success_message("Vous n'avez pas sélectionné de pizza");
     setTimeout(() => {
-      set_success_message("");
     }, 2000);
   }  
 }
@@ -166,32 +200,38 @@ const ClickSaveSelectedPizza = () => {
                   value={text}
                   />
                 </div>
-            </div>
+            </div>      
           <div className="div-display-pizzas-ingredient">
             {display_pizzas.map(display_pizzas => (
               <React.Fragment >
-                <div onClick={() => handleClick(display_pizzas.id)}
-                     className="div-card-pizzas-ingredient"
-                     key={display_pizzas.id}
-                    //  style={{
-                    //    boxShadow: myStyle[`${display_pizzas.id}`]
-                    //      ? "4px 4px 4px 4px rgba(0, 0, 0, 0.55)"
-                    //      : "initial"
-                    //  }}
+                <div className="div-card-pizzas-ingredient"
                 >
                   <div className="div-display-pizzas">
-                    <label>{display_pizzas.attributes.nom}</label>
+                    <label>{display_pizzas.name}</label>
                   </div>
-                  {/* Get les ingredients */}
                   <div className="div-display-ingredient">
                     <span>Ingredients :  
-                      {display_pizzas.attributes.ingredients.data.map(ingredient => (
+                      {display_pizzas.ingredients.map(ingredient => (
                         <React.Fragment>
-                          {" " + ingredient.attributes.nom_ingredient}
+                          <span >
+                          {" " + ingredient}
+                          </span>
                         </React.Fragment>
                         ))}
                     </span>
                   </div>
+                  <div className="div-display-btn">
+
+                  {display_pizzas.id.map((index, idx) => (
+                    <React.Fragment>
+                        <div className="btn_id" onClick={() => handleClick(index)} >
+                          <span>Taille : {display_pizzas.size[idx]} </span>
+                          <span>Prix : {display_pizzas.price[idx]} €</span>
+                        </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+
                 </div>
               </React.Fragment>
             ))}
@@ -205,11 +245,14 @@ const ClickSaveSelectedPizza = () => {
                 <div className="display-selected-pizza">
                   {/* map display pizza selected */
                   display_pizzas_selected.map(display_pizzas_selected => (
+
                     <React.Fragment>
 					          <div className="pizza-quantity-btn">
                       <div className="div-card-pizzas-ingredient">
                         <div className="div-display-pizzas">
-                          <span>{display_pizzas_selected.attributes.nom} : {display_pizzas_selected.quantity}</span>
+                          {/* {console.log(display_pizzas_selected)}   */}
+                          <span > {display_pizzas_selected.name}  x{display_pizzas_selected.quantity}</span>
+                          <span > { display_pizzas_selected.taille == "Grande" ? " : XL" : " : M "}</span>
                         </div>
                       </div>
                         <div className="div-input-less">

@@ -4,7 +4,7 @@
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    height: 50vh;
+    height:60vh;
     border-top: 1px solid #ccc;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -12,13 +12,20 @@
     margin-right: 5px;
     overflow-y: scroll;
 }
+.planning__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    border-top: 1px solid #ccc;
+}
 
 .planning_card{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 20%;
-    height: 70%;
     border: 1px solid black;
     border-radius: 4px;
     margin-top: 10px;
@@ -55,11 +62,11 @@
 
 .display_pizza_rerserved{
     cursor: pointer;
-    height: 40px;
+    height: 45px;
     border-radius: 5px;
 }
 .display_pizza_rerserved:hover{
-    background: green;
+    background: #ccc;
 }
 
 
@@ -93,5 +100,45 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    margin: 10px;
 }
+
+.popup_input{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* popup  */
+.popup_false{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: rgba(0,0,0, 0.5);
+  }
+  
+  .popup_container_false{
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border-radius: 5px;
+      padding: 50px;
+  }
+  
+  .popup_content_false{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      margin: 20px;
+  }

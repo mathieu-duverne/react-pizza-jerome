@@ -5,6 +5,8 @@ import { CgWebsite } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { removeToken } from "./helpers";
+import { setPizzas } from "./helpers";
+import { getPizzas } from "./helpers";
 import {useRef, useEffect, useState} from 'react';
 import {FaBars, FaTimes} from "react-icons/fa";
 import "../style/nav.css";
@@ -18,9 +20,8 @@ const NavBar = () => {
 
     useEffect (() => {
         const loadCart = () => {
-            if (localStorage.getItem('pizzas') != null) {
-                let retrievedObject = localStorage.getItem('pizzas');
-                let parsedObject = JSON.parse(retrievedObject);
+            if (getPizzas() != null) {
+                let parsedObject = JSON.parse(getPizzas());
                 setCount_items("Panier : " + parsedObject.length + " v");
                 setDisplay_pizza_in_cart(parsedObject);
             }
@@ -94,7 +95,7 @@ const NavBar = () => {
                 >
                     {display_pizza_in_cart.map((pizza, index) => (
                         <div key={index}>
-                            <p style={{color: "black"}}>{pizza.attributes.nom}</p>
+                            <p style={{color: "black"}}>{pizza.name}</p>
                         </div>
                     ))}
                 </div>

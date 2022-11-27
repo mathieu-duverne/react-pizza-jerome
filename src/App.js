@@ -18,9 +18,6 @@ import Planning  from './components/planning/Planning';
 import Dsp_Planning  from './components/Display_planning';
 
 function App() {
-
-
-    console.log(getPizzas());
     
     return (
 
@@ -33,8 +30,8 @@ function App() {
                 <Route path="/reservation" element={<Dsp_Planning />} />
                 <Route
                  path="/planning"
-                element={<Planning />}
-                //  element={getPizzas() ? <Planning /> : <Navigate to="/autocomplete" />}
+                // element={<Planning />}
+                 element={getPizzas() ? <Planning /> : <Navigate to="/autocomplete" />}
                  />
                 <Route path="/autocomplete" element={<AutoComplete />} />
 

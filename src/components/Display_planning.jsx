@@ -18,29 +18,16 @@ const Display_Planning = () => {
         loadReservations();
     },[])
 
+    const CreateRows = (pizzas_reserved) => {
+        // console.log(pizzas_reserved);
+        return(
+        Object.keys(pizzas_reserved).map(key =>
+            // console.log(pizzas_reserved[key].pizza)
+            <span>{pizzas_reserved[key].pizza}</span>
+        ));
+    }
+
     return (
-        // <div className="planning">
-        //     <h1>Reservation</h1>
-        //     <div className="planning__container">
-        //         <div className="planning__container__header">
-        //             <t className="planning__container__header__item">Id de la commande</div>
-        //             <div className="planning__container__header__item">Client</div>
-        //             <div className="planning__container__header__item">Debut</div>
-        //             <div className="planning__container__header__item">Fin</div>
-        //             <div className="planning__container__header__item">Fin</div>
-        //         </div>
-        //         <div className="planning__container__body">
-        //             {reservations.map(reservation => (
-        //                 <div className="planning__container__body__item">
-        //                     <div className="planning__container__body__item__content">{reservation.id}</div>
-        //                     <div className="planning__container__body__item__content">{reservation.attributes.client}</div>
-        //                     <div className="planning__container__body__item__content">{reservation.attributes.debut_resa}</div>
-        //                     <div className="planning__container__body__item__content">{reservation.attributes.fin_resa}</div>
-        //                 </div>
-        //             ))}
-        //         </div>
-        //     </div>
-        // </div>
         // create a table with all reservations
         <div className="planning">
             <h1>Reservation</h1>
@@ -52,6 +39,9 @@ const Display_Planning = () => {
                             <th>Client</th>
                             <th>Debut</th>
                             <th>Fin</th>
+                            <th>pizza reserver</th>
+                            <th>Information supplementaires</th>
+                            <th>Prix total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,7 +50,12 @@ const Display_Planning = () => {
                                 <td>{reservation.id}</td>
                                 <td>{reservation.attributes.client}</td>
                                 <td>{reservation.attributes.debut_resa}</td>
-                                <td>{reservation.attributes.fin_resa}</td>
+                                <td className="planning_container__table__td">{reservation.attributes.fin_resa}</td>
+                                <td className="planning__container__table__td__scrollable">
+                                    {CreateRows(reservation.attributes.pizzas_reserved)}
+                                </td>
+                                <td>{reservation.attributes.informations}</td>
+                                <td>{reservation.attributes.prix_total}</td>
                             </tr>
                         ))}
                     </tbody>

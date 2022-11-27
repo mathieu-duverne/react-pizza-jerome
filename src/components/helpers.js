@@ -23,3 +23,6 @@ export const setPizzas = (pizzas) => {
         localStorage.setItem("pizzas", JSON.stringify(pizzas));
     }
 }
+export const removePizzas = () => {
+    localStorage.removeItem("pizzas");
+};
