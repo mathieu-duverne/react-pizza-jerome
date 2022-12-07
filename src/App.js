@@ -16,6 +16,8 @@ import { getPizzas } from "./components/helpers";
 import AutoComplete  from './components/autocomplete/AutoComplete';
 import Planning  from './components/planning/Planning';
 import Dsp_Planning  from './components/Display_planning';
+import Accueil from './components/accueil/Accueil';
+import Livreur from './components/livreur/Livreur';
 
 function App() {
     
@@ -43,7 +45,8 @@ function App() {
                 <Route path='/connexion' element={<Login />} />
                 <Route path="/list" element={<PersonList />} />
                 <Route path="/reservation" element={<Booking />} />
-                {/* <AuthenticatedRoute path="/" component={Accueil} /> */}
+                <Route path='/' element={<Accueil />} />
+                <Route path='/livraison' element={<Livreur />} />
             </Routes>
             <Footer />
 

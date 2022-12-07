@@ -76,7 +76,7 @@ const Login = () => {
 
         const token = data.jwt;
         const idUser = data.user.id;
-        console.log(idUser)
+        // console.log(idUser)
 
         const responseRole = axios.get(`${API}/users/me?populate=*`,{
           headers: {
@@ -85,14 +85,13 @@ const Login = () => {
         });
 
         const dataRole = await responseRole;
-        console.log(dataRole)
+        console.log(dataRole.data.role.name)
         if (dataRole?.error) {
 
           throw data?.error
-        } else if(dataRole.data.role.name == "utilisateur"){
+        } else if(dataRole.data.role.name == "Authenticated"){
           /////////////////////////////////////////////// TOUTES LES CONDITIONS DE REDIRECTION A SET UP ////////////////////////////////
-          navigate("/reservation");
-          console.log('first')
+          navigate("/autocomplete");
         } else {
           
           console.log(dataRole)
