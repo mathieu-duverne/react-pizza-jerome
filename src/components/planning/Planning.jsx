@@ -27,6 +27,7 @@ const  Planning = () => {
 		{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 		{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
 		{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
+		{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 		{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 		{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 		{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
@@ -52,6 +53,7 @@ const  Planning = () => {
 		{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 		{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
 		{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
+		{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 		{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 		{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 		{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
@@ -73,77 +75,18 @@ const  Planning = () => {
 		{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}
 	]);
 
-
+	const [data, setData] = useState([]);
 	useEffect(()=>{
         const loadReserved = async (date) => {
             const response = await axios.get(`${API}/reservations?filters[debut_resa][$containsi]=${date}`);
-			sort_object_by_debut_resa(response.data.data);
+			// sort_object_by_debut_resa(response.data.data);
 			// console.log(response.data.data);
 			strcutured_pizza_reserved(response.data.data)
+			setData(response.data.data);
         }
         loadReserved(date);
     }
     ,[date]);
-
-	function sort_object_by_debut_resa(data, input1="18:00:00", input2=2) {
-		let sorted_data = data.sort((a, b) => {
-			return new Date(a.attributes.debut_resa) - new Date(b.attributes.debut_resa);
-		});
-		let tmp_debut = "";
-		let tmp_fin = "";
-		let tmp_fin_coller = "";
-		sorted_data.map((resa, idx) => {
-			// console.log(resa.attributes.debut_resa.split("T")[1].split(".")[0], input1);
-			if (resa.attributes.debut_resa.split("T")[1].split(".")[0] === input1) {
-				for (let i = 0; i < sorted_data.length-1; i++) {
-				if (sorted_data[i].attributes.fin_resa === sorted_data[i+1].attributes.debut_resa) {
-					// console.log("resa colle")
-					// console.log(idx)
-					// console.log(sorted_data[i].id) // stocker çaaaa id de la commande collée 
-					// console.log(sorted_data[i].attributes.debut_resa) 
-					// console.log(sorted_data[i+1].attributes.fin_resa)
-					tmp_fin_coller = sorted_data[i+1].attributes.fin_resa;
-				}
-			}	
-			}
-		})
-		let tmp_coller = tmp_fin_coller;
-		for (let y = 0; y < input2; y++) {
-			// ajout d'une minutes et 40 seconde à la fin de la commande
-			tmp_fin = new Date(tmp_coller);
-			tmp_fin.setMinutes(tmp_fin.getMinutes() + 1);
-			tmp_fin.setSeconds(tmp_fin.getSeconds() + 40);
-			// rempace toISOstring because its deprecated
-			// console.log(tmp_fin)
-			tmp_fin = tmp_fin.toISOString();
-			tmp_coller = tmp_fin;
-			// console.log(tmp_fin); 	
-			// console.log(tmp_fin_coller.split("T")[1].split(".")[0])*
-			// map all sorted data
-			
-			sorted_data.map((resa, idx) => {
-				console.log(resa.attributes.debut_resa.split("T")[1].split(".")[0], tmp_fin.split("T")[1].split(".")[0]);
-				if (resa.attributes.debut_resa.split("T")[1].split(".")[0] === tmp_fin.split("T")[1].split(".")[0]) {
-					// console.log("resa colle")
-					console.log("resa coller a une de distance")
-					console.log(y)
-					// console.log(resa.attributes.fin_resa)
-				}
-				else{
-					// console.log(tmp_fin.split("T")[1].split(".")[0])
-					console.log("resa pas coller")
-					console.log(y)
-				}
-			})
-
-			// console.log(tmp_fin_coller.split("T")[1].split(".")[0])
-		}
-		// console.log(tmp_fin_coller)
-
-		// console.log(sorted_data)
-		// console.log("18:00:00")
-		// console.log("nbr de pizza a deplacer est de 2")
-	}
 	
 	const setDateQuery = (e) => {
 		setDate(e);
@@ -175,6 +118,7 @@ const  Planning = () => {
 			{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 			{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
 			{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
+			{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 			{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 			{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 			{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
@@ -201,6 +145,7 @@ const  Planning = () => {
 				{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 				{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
 				{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
+				{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 				{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 				{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
 				{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
@@ -253,7 +198,7 @@ const  Planning = () => {
 		})
 		setCrenaux(crenaux1);
 	}
-	}
+	} 
 
 
 	const checkColor = (dispo) => {
@@ -403,6 +348,123 @@ const  Planning = () => {
 		setInfo_supp(event.target.value);
 	};
 
+	const [dateAvance, setDateAvance] = useState("18:00");
+	const onChangesetDateAvance = (date) => {
+		setDateAvance(date);
+	}
+
+	const [dateAvance2, setDateAvance2] = useState(3);
+	const setAvance = (avance) => {
+		setDateAvance2(avance);
+	}
+
+	function getDispo(){
+
+		let input1 = dateAvance+":00";
+		let input2 = dateAvance2;
+		let tmp_dispo = 0
+		let tmp_fin
+		let tmp_indispobible = 0
+		crenaux.map((creneau, index) => {
+			if (creneau.horaire.split(" - ")[0] >= input1){
+				if(tmp_dispo == input2){ 
+					return
+				 }
+				creneau.disponibilité.map((dispo, idx) => {
+					if (tmp_dispo < input2){
+						if (dispo == "disponible" ){
+							tmp_dispo += 1
+							tmp_fin = calcul_debut(creneau.horaire, idx+1);	
+						}
+						else {
+							tmp_indispobible += 1
+						}
+					}
+					if (tmp_dispo == input2){
+						return
+					}
+				})
+			}
+		})
+		if (tmp_indispobible == 0){
+			alert("Il n'y as rien as deplacer")
+			return
+		}
+
+		console.log(tmp_dispo, tmp_indispobible)
+		let res = date + "T" + tmp_fin + ".000Z";
+		let sorted_data = data.sort((a, b) => {
+			return new Date(b.attributes.debut_resa) - new Date(a.attributes.debut_resa);
+		});
+		let tmp_data = []
+		sorted_data.map((resa, idx) => {
+			if (new Date(resa.attributes.debut_resa) < new Date(res)){
+				tmp_data.push(resa)
+			}
+		})
+		
+		// subtract two dates and return the difference in minutes and seconds
+		let difference = new Date(res) - new Date(tmp_data[0].attributes.fin_resa);
+		// divide the difference by 100 seconds
+		let secondeDifference = Math.floor(difference / 1000 / 100);
+		console.log(secondeDifference)
+
+		// transform into minutes and seconds
+		// let minutes = Math.floor(difference / 1000 / 60);
+		// let seconds = Math.floor(difference / 1000) - minutes * 60;
+		// // divide minutes and seconds per 100 
+		// console.log(minutes, seconds)
+		console.log(tmp_data[0].attributes.fin_resa, res)
+		console.log(tmp_data)
+		tmp_data.map((resa, index) => {
+			const datas = {"data":{}};
+			datas.data.id = resa.id;
+			// console.log(datas.data.debut_resa)
+
+			datas.data.debut_resa = "";
+			// add 1 minutes, 40 secondes * input2 to resa.attributes.debut_resa
+			let tmp_debut = new Date(resa.attributes.debut_resa)
+			tmp_debut.setMinutes(tmp_debut.getMinutes() + 1*secondeDifference);
+			tmp_debut.setSeconds(tmp_debut.getSeconds() + 40*secondeDifference);
+			tmp_debut = tmp_debut.toISOString();
+			// console.log(tmp_debut)
+			datas.data["debut_resa"] = tmp_debut
+			// add 1 minutes, 40 secondes * input2 to resa.attributes.fin_resa
+			let tmp_fin = new Date(resa.attributes.fin_resa)
+			tmp_fin.setMinutes(tmp_fin.getMinutes() + 1*secondeDifference);
+			tmp_fin.setSeconds(tmp_fin.getSeconds() + 40*secondeDifference);
+			tmp_fin = tmp_fin.toISOString();
+			// console.log(tmp_fin)
+			datas.data["fin_resa"] = tmp_fin
+
+			console.log(datas, resa.id)
+			updateById(datas, resa.id)
+		})
+		// reload page
+		// setTimeout(function(){
+			// window.location.reload();
+		// }
+		// , 3000);
+	}
+
+
+	function updateById(datas, id){
+		axios({
+			method: 'put',
+			url: `http://localhost:1337/api/reservations/${id}`,
+			headers: {
+				'Content-Type': 'application/json; charset=utf-8',
+			},
+			data : datas
+		})
+		.then(function (response) {
+			console.log(response);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+		// make five second delay
+	}
 
 	const clickHandlerConfirmed_Resa = () => {
 		// if client name is empty
@@ -414,7 +476,7 @@ const  Planning = () => {
 		let date_debut = date + "T" + debut + ".000Z";
 		let date_fin = date + "T" + fin + ".000Z";
 		console.log(lst_pizza_object);
-		const data = {
+		const datas = {
 			"data":
 			{
 				"debut_resa":date_debut,
@@ -429,7 +491,7 @@ const  Planning = () => {
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
-			data : data,
+			data : datas,
 		})
 			.then(response => {
 				// Handle success.
@@ -460,6 +522,21 @@ const  Planning = () => {
 						value={date}
           				onChange={(e) => setDateQuery(e.target.value)}
           			/>
+
+					<input 
+						type="time" id="appt" name="appt"
+       					min="18:00" max="22:00"
+						onChange={(e) => onChangesetDateAvance(e.target.value)}
+						value={dateAvance}
+					/>
+					<input
+						type="number"
+						min="0"
+						max="3"
+						value={dateAvance2}
+						onChange={(e) => setAvance(e.target.value)}
+					/>
+					<button onClick={getDispo}>Avancer</button>
 					{modalisOpen && (
        					<div className="popup">
 							<div className="popup_container">		
