@@ -8,7 +8,7 @@
 }
 
 :root {
-	--mainColor: #29335c;
+	--mainColor: #000;
 	--mainColorLight: #5767aa;
 	--secondaryColor: #db2b39;
 	--textColor: #eee;
@@ -50,6 +50,23 @@ header div,
 nav {
 	display: flex;
 	align-items: center;
+}
+.cart{
+	cursor: pointer;
+}
+.toogle_dropdown_cart{
+	/* make a div 500x500 position fixed and scollable*/
+	position: absolute;
+	top: 55px;
+	/* en dessous div.cart */
+	z-index: 1;
+	width: 200px;
+	height: 200px;
+	overflow-y: scroll;
+	border: 1px solid black;
+	background-color: aliceblue;
+
+
 }
 
 @media only screen and (max-width: 1024px) {

@@ -12,10 +12,16 @@ import React from 'react';
 import SignUp from './components/PersonAdd';
 import { useState } from 'react';
 import { getToken } from "./components/helpers";
+import { getPizzas } from "./components/helpers";
 import AutoComplete  from './components/autocomplete/AutoComplete';
+import Planning  from './components/planning/Planning';
+import Dsp_Planning  from './components/Display_planning';
+import Accueil from './components/accueil/Accueil';
+import Livreur from './components/livreur/Livreur';
+import ClientCommand from './components/clientCommand/ClientCommand';
 
 function App() {
-
+    
     return (
 
         <div className="App">
@@ -24,6 +30,12 @@ function App() {
             </React.Fragment>
 
             <Routes>
+                <Route path="/reservation" element={<Dsp_Planning />} />
+                <Route
+                 path="/planning"
+                // element={<Planning />}
+                 element={getPizzas() ? <Planning /> : <Navigate to="/autocomplete" />}
+                 />
                 <Route path="/autocomplete" element={<AutoComplete />} />
 
                 <Route path="/inscription" element={<SignUp />} />
@@ -34,7 +46,9 @@ function App() {
                 <Route path='/connexion' element={<Login />} />
                 <Route path="/list" element={<PersonList />} />
                 <Route path="/reservation" element={<Booking />} />
-                {/* <AuthenticatedRoute path="/" component={Accueil} /> */}
+                <Route path='/' element={<Accueil />} />
+                <Route path='/livraison' element={<Livreur />} />
+                <Route path='/validation' element={<ClientCommand />} />
             </Routes>
             <Footer />
 

@@ -13,3 +13,16 @@ export const setToken = (token) => {
 export const removeToken = () => {
     localStorage.removeItem(AUTH_TOKEN);
 };
+
+export const getPizzas = () => {
+    return localStorage.getItem("pizzas");
+};
+
+export const setPizzas = (pizzas) => {
+    if (pizzas) {
+        localStorage.setItem("pizzas", JSON.stringify(pizzas));
+    }
+}
+export const removePizzas = () => {
+    localStorage.removeItem("pizzas");
+};
