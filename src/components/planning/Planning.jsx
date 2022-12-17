@@ -454,7 +454,7 @@ const  Planning = () => {
 	function updateById(datas, id){
 		axios({
 			method: 'put',
-			url: `https://aquoipizza.com/api/reservations/${id}`,
+			url: `${API}/reservations/${id}`,
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
@@ -490,7 +490,7 @@ const  Planning = () => {
 			}}
 		axios({
 			method: 'post',
-			url: 'https://aquoipizza.com/api/reservations',
+			url: `${API}/reservations`,
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
 			},

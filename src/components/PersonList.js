@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { API } from './constant';
 
 export default class PersonList extends React.Component {
   state = {
@@ -7,7 +8,7 @@ export default class PersonList extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:1337/api/users`)
+    axios.get(`${API}/users`)
       .then(res => {
         const persons = res.data;
         this.setState({ persons });

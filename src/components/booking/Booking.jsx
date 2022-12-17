@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import getAllPizzas from '../../api/PizzasApi';
 import newBooking from '../../api/BookingApi';
 import BookingApi from '../../api/BookingApi';
+import { API } from "../constant";
 
 const Booking = () => {
   const [pizzas, setPizzas] = useState([]);
@@ -34,7 +35,7 @@ const Booking = () => {
 
   useEffect(()=>{
      
-        axios.get('http://localhost:1337/api/pizzas')
+        axios.get(`${API}/api/pizzas`)
         .then(res => {
           // console.log(res.data.data)
           setPizzas(res.data.data)
@@ -42,7 +43,7 @@ const Booking = () => {
   },[])
 
   useEffect(() => {
-      axios.get('http://localhost:1337/api/reservations?populate=*')
+      axios.get(`${API}/reservations?populate=*`)
       .then(res => {
           console.log(res.data.data)
           setBooked(res.data.data)
