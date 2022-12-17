@@ -2,7 +2,7 @@ import PersonList from './components/PersonList';
 import './App.css';
 import Profile from "./components/Profile/Profile";
 import PersonAdd from './components/PersonAdd';
-//import Accueil from './components/Accueil';
+// import Accueil from './components/Accueil';
 import Login from './components/login/Login';
 import Booking from './components/booking/Booking';
 import {Routes, Route, Navigate} from "react-router-dom";
