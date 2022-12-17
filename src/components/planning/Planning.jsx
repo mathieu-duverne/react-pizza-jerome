@@ -21,6 +21,9 @@ const  Planning = () => {
 	const [fin, setFin] = useState("");
 	const [lst_pizza_object, setLst_pizza_object] = useState({});
 	const [pizza_reserved, setPizzaReserved] = useState({})
+	const navigateValidate = () => {
+		navigate('/validation');
+	}
 
     
 	const [crenaux, setCrenaux] = useState([
@@ -451,7 +454,7 @@ const  Planning = () => {
 	function updateById(datas, id){
 		axios({
 			method: 'put',
-			url: `http://localhost:1337/api/reservations/${id}`,
+			url: `https://aquoipizza.com/api/reservations/${id}`,
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
@@ -487,7 +490,7 @@ const  Planning = () => {
 			}}
 		axios({
 			method: 'post',
-			url: 'http://localhost:1337/api/reservations',
+			url: 'https://aquoipizza.com/api/reservations',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
@@ -500,7 +503,7 @@ const  Planning = () => {
 				// vider pizzas du local storage
 				localStorage.removeItem('pizzas');
 				// navigate to display planning
-				navigate("/reservation");
+				navigate("/validation");
 			})	
 			.catch(error => {
 				// Handle error.
@@ -574,7 +577,7 @@ const  Planning = () => {
 									</div>
         						</div>
 								
-								<button onClick={() => clickHandlerConfirmed_Resa("nom_client")}>
+								<button	onClick={() => clickHandlerConfirmed_Resa("nom_client")}>
           							Reservation
         						</button>
         						<button onClick={() => setmodalisOpen(false)}>

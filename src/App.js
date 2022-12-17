@@ -18,6 +18,7 @@ import Planning  from './components/planning/Planning';
 import Dsp_Planning  from './components/Display_planning';
 import Accueil from './components/accueil/Accueil';
 import Livreur from './components/livreur/Livreur';
+import ClientCommand from './components/clientCommand/ClientCommand';
 
 function App() {
     
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/reservation" element={<Booking />} />
                 <Route path='/' element={<Accueil />} />
                 <Route path='/livraison' element={<Livreur />} />
+                <Route path='/validation' element={<ClientCommand />} />
             </Routes>
             <Footer />
 

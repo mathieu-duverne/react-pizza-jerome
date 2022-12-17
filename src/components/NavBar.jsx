@@ -51,6 +51,10 @@ const NavBar = () => {
         // onclick display a list of selected pizza
         setIsActive(current => !current);
     }
+
+    // const navigatePanier = () => {
+    //     navigate('')
+    // }
         // // display pizzas in local storage if there is any
         // if (localStorage.getItem('pizzas') != null) {
         //     let retrievedObject = localStorage.getItem('pizzas');
@@ -96,6 +100,7 @@ const NavBar = () => {
                     {display_pizza_in_cart.map((pizza, index) => (
                         <div key={index}>
                             <p style={{color: "black"}}>{pizza.name}</p>
+                            {/* <button></button> */}
                         </div>
                     ))}
                 </div>
