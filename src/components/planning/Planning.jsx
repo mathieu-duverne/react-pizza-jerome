@@ -22,7 +22,7 @@ const  Planning = () => {
 	const [lst_pizza_object, setLst_pizza_object] = useState({});
 	const [pizza_reserved, setPizzaReserved] = useState({})
 	const navigateValidate = () => {
-		navigate('/validation');
+		navigate('/reservation');
 	}
 
 	// reformat date to dd/mm/yyyy
@@ -504,7 +504,7 @@ const  Planning = () => {
 				// vider pizzas du local storage
 				localStorage.removeItem('pizzas');
 				// navigate to display planning
-				navigate("/validation");
+				navigate("/reservation");
 			})	
 			.catch(error => {
 				// Handle error.

@@ -92,7 +92,7 @@ const Login = () => {
           throw data?.error
         } else if(dataRole.data.role.name == "Authenticated"){
           /////////////////////////////////////////////// TOUTES LES CONDITIONS DE REDIRECTION A SET UP ////////////////////////////////
-          navigate("/autocomplete");
+          navigate("/pizzas");
         } else {
           
           console.log(dataRole)
