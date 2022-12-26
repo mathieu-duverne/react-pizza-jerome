@@ -25,6 +25,15 @@ const  Planning = () => {
 		navigate('/validation');
 	}
 
+	// reformat date to dd/mm/yyyy
+	function get_date_formated_today(){
+		let today = new Date();
+		let dd = String(today.getDate()).padStart(2, '0');
+		let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		let yyyy = today.getFullYear();
+		today = yyyy + '-' + mm + '-' + dd;
+		return today;
+	}
     
 	const [crenaux, setCrenaux] = useState([
 		{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
@@ -82,16 +91,16 @@ const  Planning = () => {
 	useEffect(()=>{
         const loadReserved = async (date) => {
             const response = await axios.get(`${API}/reservations?filters[debut_resa][$containsi]=${date}`);
-			// sort_object_by_debut_resa(response.data.data);
-			// console.log(response.data.data);
 			strcutured_pizza_reserved(response.data.data)
 			setData(response.data.data);
         }
         loadReserved(date);
+		console.log(date)
     }
     ,[date]);
 	
 	const setDateQuery = (e) => {
+		console.log(e)
 		setDate(e);
 
 	}
@@ -246,14 +255,6 @@ const  Planning = () => {
 			(seconds < 10 ? "0" + seconds : seconds)
 		);
 	}
-
-    function get_date_formated_today(){
-        let today = new Date();
-        let year = today.getFullYear();
-        let month = today.getMonth() + 1;
-        let day = today.getDate();
-        return year + "-" + month + "-" + day;
-    }
 	
 	function calcul_debut(creneau_reserved, i){
 		// console.log(creneau_reserved, i)
@@ -444,10 +445,10 @@ const  Planning = () => {
 			updateById(datas, resa.id)
 		})
 		// reload page
-		// setTimeout(function(){
-			// window.location.reload();
-		// }
-		// , 3000);
+		setTimeout(function(){
+			window.location.reload();
+		}
+		, 3000);
 	}
 
 

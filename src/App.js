@@ -13,8 +13,9 @@ import SignUp from './components/PersonAdd';
 import { useState } from 'react';
 import { getToken } from "./components/helpers";
 import { getPizzas } from "./components/helpers";
-import AutoComplete  from './components/autocomplete/AutoComplete';
+import SelectedPizza  from './components/SelectedPizza/SelectedPizza';
 import Planning  from './components/planning/Planning';
+import PlanningV2  from './components/planning/PlanningV2';
 import Dsp_Planning  from './components/Display_planning';
 import Accueil from './components/accueil/Accueil';
 import Livreur from './components/livreur/Livreur';
@@ -31,12 +32,15 @@ function App() {
 
             <Routes>
                 <Route path="/reservation" element={<Dsp_Planning />} />
+                <Route path="/planningV2" element={<PlanningV2 />} />
                 <Route
                  path="/planning"
                 // element={<Planning />}
-                 element={getPizzas() ? <Planning /> : <Navigate to="/autocomplete" />}
+                // console log getPizzas()
+            
+                 element={getPizzas() ? <Planning /> : <Navigate to="/Pizzas" />}
                  />
-                <Route path="/autocomplete" element={<AutoComplete />} />
+                <Route path="/Pizzas" element={<SelectedPizza />} />
 
                 <Route path="/inscription" element={<SignUp />} />
                 <Route

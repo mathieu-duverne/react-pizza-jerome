@@ -1,14 +1,12 @@
 import React from "react";
-import axios from 'axios';
-import { API } from "../constant";
-import { useNavigate } from "react-router-dom";
 import { setPizzas } from "../helpers";
 import { getPizzas } from "../helpers";
 import { removePizzas } from "../helpers";
+import getAllPizzasPopulate from "../../api/PizzasApi";
 import { useState, useEffect, useRef} from 'react';
-import "./AutoComplete.css"
+import "./SelectedPizza.css"
 
-const AutoComplete = () => {
+const SelectedPizza = () => {
     
   const [pizzas, setPizza] = useState([]);
   const [text, setText] = useState("");
@@ -18,20 +16,33 @@ const AutoComplete = () => {
   const [popup, setPopup] = useState(false);
   const [note, setNote] = useState("");
   const input1 = useRef(null);
+  const [IdSelected, setIdSelected] = useState(null);
+  const [NameSelected, setNameSelected] = useState(null);
+  const [SizeSelected, setSizeSelected] = useState(null);
+  const [PriceSelected, setPriceSelected] = useState(null);
+  const [IngredientsSelected, setIngredientsSelected] = useState(null);
 
+  // TESTE THIS FUNCTION OF GET PIZZA AND STRUCTURED PIZZA FOR AUTOCOMPLETE ETC
   useEffect(()=>{
-    const loadPizzas = async () => {
-    const response = await axios.get(`${API}/pizzas?populate=*`);	
-    structured_pizzas(response.data.data);
-    }
-    loadPizzas();
+    const re = getAllPizzasPopulate();
+      re.then(function(data) {
+        console.log(data)
+        if (data != null) {
+          console.log(data)
+          structured_pizzas(data);
+        }
+     })
+  }, [])
+
+  useEffect(() => {
     if (getPizzas() != null) {
       setDisplay_pizzas_selected(JSON.parse(getPizzas()));
     }
+  }, [])
 
-  },[])
 
   function structured_pizzas(data){
+    console.log("no need +1")
     let pizzas = [];
     // copy the data without same pizza 
     data.map(pizza => {
@@ -53,6 +64,7 @@ const AutoComplete = () => {
     let res = merge_pizza(pizzas, data);
     setPizza(res);
     setDisplay(res);
+    return "ok"
   }
 
   function merge_pizza(pizzas, data){
@@ -63,20 +75,21 @@ const AutoComplete = () => {
           pizza.price.push(pizza2.attributes.prix);
           pizza.size.push(pizza2.attributes.taille);
         }
+      })
     })
-})
-return pizzas
-}
-
-  // ---------- COMPOSANT AUTOCOMPLETE ------------ //
+    return pizzas
+  }
+  
   const onChangeHandler = (text) => {
     // initialisation du tableau des matchs
     let matches = [];
     // si il y a au moins un caractère dans le champ de recherche
     if (text.length > 0) {
-      // Fonction du filtre de react
       matches = pizzas.filter(pizza => {
-        const regex = new RegExp(`${text}`, "gi");
+        const regex = new RegExp(`^${text}`, "i");
+        // espace all accent and special character and uppercase
+
+        pizza.name = pizza.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         return pizza.name.match(regex)
       })
       // set le display qui change en fonction de la recherche
@@ -92,13 +105,7 @@ return pizzas
   }
 
 // ---------- COMPOSANT CLICK ON PIZZA (change style, create list of selected pizza) ------------ //
-const [IdSelected, setIdSelected] = useState(null);
-const [NameSelected, setNameSelected] = useState(null);
-const [SizeSelected, setSizeSelected] = useState(null);
-const [PriceSelected, setPriceSelected] = useState(null);
-const [IngredientsSelected, setIngredientsSelected] = useState(null);
-
-  const handleClick = (id) => {
+const handleClick = (id) => {
     setIdSelected(id);
     setPopup(true);
     pizzas.map(pizza => {
@@ -111,7 +118,7 @@ const [IngredientsSelected, setIngredientsSelected] = useState(null);
         }
       })
     }) 
-  }
+}
   const handleClickConfirm = (id) => {
     const lstid = display_pizzas_selected.map(pizza => pizza.id);
     if (!lstid.includes(id)) {
@@ -221,7 +228,6 @@ const ClickSaveSelectedPizza = () => {
               <h1>{NameSelected}</h1>
               <h3>de taille {SizeSelected} à {PriceSelected} €</h3>
               <h3>Elle contient les ingrédients suivants :</h3>
-              {/* map ingredients */}
               {IngredientsSelected.map((ingredient) => (
                 <h4>{ingredient}</h4>
               ))}
@@ -247,7 +253,6 @@ const ClickSaveSelectedPizza = () => {
                 >
                   Confirmer
                 </button>
-                {/* and make button cancel */}
                 <button
                   className="btn btn-primary"
                   onClick={() => setPopup(false)}
@@ -275,31 +280,6 @@ const ClickSaveSelectedPizza = () => {
                     onChange={e => onChangeHandler(e.target.value)}
                     value={text}
                   />
-                </div>
-                <div className="filtre-search-bar">
-                  {/* input type radio */}
-                  {/* be */}
-                  <div className="rows">
-                    <input
-                      type="radio"
-                      id="all"
-                      name="filter"
-                      value="pizzas"
-                      // onChange={e => setFilter(e.target.value)}
-                    />
-                    <label htmlFor="">Nom de pizzas</label>
-
-                  </div>
-                  <div className="rows">
-                    <input
-                      type="radio"
-                      id="all"
-                      name="filter"
-                      value="ingredients"
-                      // onChange={e => setFilter(e.target.value)}
-                    />
-                    <label htmlFor="">Ingrédients</label>
-                  </div>
                 </div>
             </div>      
           <div className="div-display-pizzas-ingredient">
@@ -336,14 +316,14 @@ const ClickSaveSelectedPizza = () => {
             ))}
           </div>
         </div>
+        {/* AUTOCOMPLETE */}
         <div className="form_pizza">
             <div className="pizza-selected">
                 <div className="pizza-selected-title">
                     <h2>Pizza sélectionnée</h2>
                 </div>
                 <div className="display-selected-pizza">
-                  {/* map display pizza selected */
-                  display_pizzas_selected.map(display_pizzas_selected => (
+                  {display_pizzas_selected.map(display_pizzas_selected => (
 
                     <React.Fragment>
 					          <div className="pizza-quantity-btn">
@@ -354,7 +334,6 @@ const ClickSaveSelectedPizza = () => {
                         </div>
                       </div>
                       <div className="notes">
-                        {/* map note */}
                         {display_pizzas_selected.note.map(note => (
                           <React.Fragment>
                             <div className="note">
@@ -384,4 +363,4 @@ const ClickSaveSelectedPizza = () => {
   );
 }
 
-export default AutoComplete;
+export default SelectedPizza;
