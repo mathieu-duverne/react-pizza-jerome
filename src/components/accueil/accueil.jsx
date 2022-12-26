@@ -1,6 +1,5 @@
 import React from 'react'
 import './accueil.css';
-import AutoComplete from '../autocomplete/AutoComplete';
 import axios from '../../api/axios';
 import { API } from "../constant";
 import { Navigate } from 'react-router-dom';
@@ -22,7 +21,7 @@ const Accueil = () => {
 
 
      const navigateProduct = () => {
-       navigate('/autocomplete');
+       navigate('/pizzas');
      }
     // console.log(data);
 

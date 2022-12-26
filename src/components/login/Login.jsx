@@ -85,6 +85,7 @@ const Login = () => {
         });
 
         const dataRole = await responseRole;
+        console.log(dataRole)
         console.log(dataRole.data.role.name)
         if (dataRole?.error) {
 
