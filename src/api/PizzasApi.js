@@ -1,16 +1,19 @@
 import axios from "./axios";
+import { API } from "../components/constant";
 
-async function  getAllPizzas  () {
+async function getAllPizzasPopulate  () {
 
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:1337/api/pizzas')
+        axios.get(`${API}/pizzas?populate=*`)
         .then(response => {
             resolve(response.data.data)
-            // console.log(response.data.data)
-
         })
+        .catch(error => {
+            console.log(error)
+            resolve(error.response)
+        });
     })
 
 }
 
-export default getAllPizzas;
+export default getAllPizzasPopulate;

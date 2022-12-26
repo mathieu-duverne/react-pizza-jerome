@@ -63,7 +63,9 @@ const NavBar = () => {
             <h3>Pizza-jérome</h3>
             <nav ref={navRef}>
                 <a href='./'>Accueil</a>
+                <a href='/pizzas'>Pizzas</a>
                 <a href='/reservation'>Réservation</a>
+                <a href='/planningV2'>planningV2</a>
                 {user ? (
                     <> 
                         <a href="/profile">{user.username}</a>

@@ -1,10 +1,9 @@
-import { resolveTo } from "@remix-run/router";
-import axios from "./axios";
-const LOGIN_URL = '/api/auth/local';
+import axios from "axios";
+import { API } from "../components/constant";
 
 async function newBooking(creneaux, pizza){
     return new Promise((resolve, reject) => {
-        axios.post('http://localhost:1337/api/reservations',{
+        axios.post(`${API}/reservations`,{
             "data":{
                 pizza: pizza,
                 creneaux: creneaux

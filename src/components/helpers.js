@@ -26,3 +26,4 @@ export const setPizzas = (pizzas) => {
 export const removePizzas = () => {
     localStorage.removeItem("pizzas");
 };
+
