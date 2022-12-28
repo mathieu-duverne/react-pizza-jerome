@@ -69,12 +69,13 @@ const PlanningV2 = () => {
     }
     ,[date]);
 
-    // function structured_planning_with_pizzas_reserved(){
-    //     crenaux.map((crenau, i) => (
-    //         console.log(crenau)
-    //     	console.log(data)
-    //     ))
-    // }
+    function structured_planning_with_pizzas_reserved(){
+        crenaux.map(crenau => (
+            console.log(crenau)
+            
+          ))
+    }
+    console.log(data)
 	
 	const setDateQuery = (e) => {
 		console.log(e)
