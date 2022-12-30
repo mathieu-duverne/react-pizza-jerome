@@ -19,11 +19,11 @@ const Display_Planning = () => {
     },[])
 
     const CreateRows = (pizzas_reserved) => {
-        // console.log(pizzas_reserved);
+        console.log(pizzas_reserved);
         return(
         Object.keys(pizzas_reserved).map(key =>
-            // console.log(pizzas_reserved[key].pizza)
-            <span>{pizzas_reserved[key].pizza}</span>
+            // console.log(pizzas_reserved[key])
+            <span>{pizzas_reserved[key].pizza}, : {pizzas_reserved[key].pizza_note}</span>
         ));
     }
 

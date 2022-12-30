@@ -17,7 +17,7 @@ import SelectedPizza  from './components/SelectedPizza/SelectedPizza';
 import Planning  from './components/planning/Planning';
 // import PlanningV2  from './components/planning/PlanningV2';
 import Dsp_Planning  from './components/Display_planning';
-import Accueil from './components/accueil/accueil';
+import Accueil from './components/accueil/Accueil';
 
 
 function App() {
@@ -51,7 +51,6 @@ function App() {
                 <Route path="/reservation" element={<Booking />} />
                 <Route path='/' element={<Accueil />} />
             </Routes>
-            <Footer />
 
         </div>
 

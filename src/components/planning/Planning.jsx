@@ -11,6 +11,7 @@ const  Planning = () => {
 	let retrievedObject = localStorage.getItem('pizzas');
 	const [pizzas, setPizzas] = useState(JSON.parse(retrievedObject));
 	const [pizzas_name, setPizzasname] = useState([]);
+	const [pizzas_note, setPizzasnote] = useState([]);
 	const [number_pizzas, setNumber_pizzas] = useState(0);
     const [reserved, setReserved] = useState([]);
     const [date, setDate] = useState(get_date_formated_today());
@@ -24,6 +25,7 @@ const  Planning = () => {
 	const navigateValidate = () => {
 		navigate('/reservation');
 	}
+	console.log(pizzas)
 
 	// reformat date to dd/mm/yyyy
 	function get_date_formated_today(){
@@ -104,6 +106,7 @@ const  Planning = () => {
 	]);
      
 	const [data, setData] = useState([]);
+	const [prix_total, set_prix_total] = useState(0)
 	useEffect(()=>{
         const loadReserved = async (date) => {
             const response = await axios.get(`${API}/reservations?filters[debut_resa][$containsi]=${date}`);
@@ -122,20 +125,30 @@ const  Planning = () => {
 
 	}
     const [time_one_pizza, setTime_one_pizza] = useState(0);
+    const [pizzasTaille, setPizzasTaille] = useState([]);
     useEffect(()=>{
 		setTime_one_pizza(100);
 		let count_pizzas = 0;
 		let lstpizza = [];
+		let lstpizza_note = [];
+		let lstpizza_taille = [];
+		let prix_total = 0;
 		pizzas.forEach(pizza => {
 
 			for (let i = 0; i < pizza.quantity; i++) {
 				count_pizzas += 1;
 				lstpizza.push(pizza.name);
+				lstpizza_note.push(pizza.note[i])
+				lstpizza_taille.push(pizza.taille)
+				prix_total += pizza.prix
 			}
 		})
 		setNumber_pizzas(count_pizzas);
 		if (pizzas_name.length == []) {
 			setPizzasname(lstpizza);
+			setPizzasnote(lstpizza_note);
+			set_prix_total(prix_total)
+			setPizzasTaille(lstpizza_taille)
 		}
     
 		let response = secondsToms(number_pizzas * time_one_pizza);
@@ -336,8 +349,10 @@ const  Planning = () => {
 								}
 								pizza_and_pos[y] = {
 									"pizza" : pizzas_name[y],
+									"pizza_note" : pizzas_note[y],
 									"creneau" : crenaux[idx_creneau].horaire.split(" ")[0],
 									"creneau_idx" : index_dispo,
+									"taille" : pizzasTaille[y],
 								}
 								index_dispo += 1;
 							}				
@@ -506,6 +521,7 @@ console.log(crenaux)
 				"pizzas_reserved":lst_pizza_object,
 				"client":client,
 				"informations":info_Supp,
+				"prix_total":prix_total,
 			}}
 		axios({
 			method: 'post',
