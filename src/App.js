@@ -19,7 +19,7 @@ import PlanningV2  from './components/planning/PlanningV2';
 import Dsp_Planning  from './components/Display_planning';
 import Accueil from './components/accueil/Accueil';
 import ForgotPassword from './components/auth/ForgotPassword';
-
+import Validation from './components/validation/Validation';
 
 function App() {
     
@@ -52,6 +52,7 @@ function App() {
                 <Route path="/reservation" element={<Booking />} />
                 <Route path='/' element={<Accueil />} />
                 <Route path='/reset' element={<ForgotPassword />} />
+                <Route path='/validation' element={<Validation />} />
             </Routes>
             <Footer />
 

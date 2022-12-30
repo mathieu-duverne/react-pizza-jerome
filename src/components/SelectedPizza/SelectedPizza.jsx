@@ -3,7 +3,7 @@ import { setPizzas } from "../helpers";
 import { getPizzas } from "../helpers";
 import { removePizzas } from "../helpers";
 import getAllPizzasPopulate from "../../api/PizzasApi";
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef} from 'react'; 
 import "./SelectedPizza.css"
 
 const SelectedPizza = () => {

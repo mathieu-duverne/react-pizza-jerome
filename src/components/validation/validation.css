@@ -1,0 +1,23 @@
+.cart{
+    /* display: block;    */
+    /* flex-direction:row; */
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.jerome{
+    display: flex;
+    align-items: center;
+}
+/* .toto{
+    display: flex;
+    flex-direction: row;
+} */
+
+h1{
+    color: #000;
+    padding-bottom: 2.5%;
+}
