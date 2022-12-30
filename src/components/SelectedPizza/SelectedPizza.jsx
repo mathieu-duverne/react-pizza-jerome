@@ -354,7 +354,7 @@ const ClickSaveSelectedPizza = () => {
                 </div>
 				
                 <div className="save-pizza-selected">
-                  <button onClick={() => ClickSaveSelectedPizza() } className="btn-save-pizza-selected">PLanifier</button>
+                  <button onClick={() => ClickSaveSelectedPizza() } className="btn-save-pizza-selected">Planifier</button>
                 </div>
 				      <span>{success_message}</span>
             </div>

@@ -34,59 +34,75 @@ const  Planning = () => {
 		today = yyyy + '-' + mm + '-' + dd;
 		return today;
 	}
+
+	// const [nbrpizza, setNbrPizza] = useState(0)
+	// function get_nbr_Pizza(){
+	// 	const date_of_day = new Date();
+    // 	const dayOfWeek = date_of_day.getDay();
+	// 	console.log(dayOfWeek)
+	// 	// vendredi == 5 | samedi == 6 | dimanche == 7
+	// 	if (dayOfWeek == 5 || dayOfWeek == 6 || dayOfWeek == 0){
+	// 		setNbrPizza(7)
+	// 	}
+	// 	else{
+	// 		setNbrPizza(6)
+	// 	}
+	// 	console.log(nbrpizza)
+	// }
+
     
 	const [crenaux, setCrenaux] = useState([
-		{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-		{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-		{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-		{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-		{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "19h20 - 19h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "19h30 - 19h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "19h40 - 19h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "19h50 - 20h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h00 - 20h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h10 - 20h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h20 - 20h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h30 - 20h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h40 - 20h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h50 - 21h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h00 - 21h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h10 - 21h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h20 - 21h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h30 - 21h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h40 - 21h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}
+		{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+		{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+		{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+		{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+		{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "19h20 - 19h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "19h30 - 19h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "19h40 - 19h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "19h50 - 20h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h00 - 20h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h10 - 20h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h20 - 20h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h30 - 20h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h40 - 20h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h50 - 21h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h00 - 21h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h10 - 21h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h20 - 21h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h30 - 21h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h40 - 21h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }
 	]);
 
 	const [crenaux1, setCrenaux1] = useState([
-		{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-		{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-		{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-		{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-		{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "19h20 - 19h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "19h30 - 19h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "19h40 - 19h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "19h50 - 20h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h00 - 20h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h10 - 20h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h20 - 20h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h30 - 20h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h40 - 20h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "20h50 - 21h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h00 - 21h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h10 - 21h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h20 - 21h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h30 - 21h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h40 - 21h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-		{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}
+		{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+		{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+		{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+		{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+		{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "19h20 - 19h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "19h30 - 19h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "19h40 - 19h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "19h50 - 20h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h00 - 20h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h10 - 20h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h20 - 20h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h30 - 20h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h40 - 20h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "20h50 - 21h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h00 - 21h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h10 - 21h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h20 - 21h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h30 - 21h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h40 - 21h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+		{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }
 	]);
-
+     
 	const [data, setData] = useState([]);
 	useEffect(()=>{
         const loadReserved = async (date) => {
@@ -95,7 +111,8 @@ const  Planning = () => {
 			setData(response.data.data);
         }
         loadReserved(date);
-		console.log(date)
+		// console.log(date)
+		// console.log(crenaux)
     }
     ,[date]);
 	
@@ -125,91 +142,96 @@ const  Planning = () => {
 		setPrep_time(response);
 	},) 
 
+
+	const [count, setCount] = useState(0)
 	function strcutured_pizza_reserved(data){
 		setCrenaux1([
-			{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-			{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-			{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-			{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-			{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "19h20 - 19h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "19h30 - 19h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "19h40 - 19h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "19h50 - 20h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "20h00 - 20h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "20h10 - 20h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "20h20 - 20h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "20h30 - 20h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "20h40 - 20h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "20h50 - 21h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "21h00 - 21h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "21h10 - 21h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "21h20 - 21h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "21h30 - 21h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "21h40 - 21h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-			{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}
+			{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+			{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+			{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+			{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+			{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "19h20 - 19h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "19h30 - 19h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "19h40 - 19h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "19h50 - 20h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "20h00 - 20h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "20h10 - 20h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "20h20 - 20h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "20h30 - 20h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "20h40 - 20h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "20h50 - 21h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "21h00 - 21h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "21h10 - 21h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "21h20 - 21h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "21h30 - 21h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "21h40 - 21h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+			{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }
 		])
 		
 		if (data.length == 0) {
 			setCrenaux([
-				{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-				{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-				{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-				{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}, 
-				{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "19h20 - 19h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "19h30 - 19h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "19h40 - 19h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "19h50 - 20h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "20h00 - 20h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "20h10 - 20h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "20h20 - 20h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "20h30 - 20h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "20h40 - 20h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "20h50 - 21h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "21h00 - 21h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "21h10 - 21h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "21h20 - 21h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "21h30 - 21h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "21h40 - 21h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]},
-				{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"]}
+				{"horaire" : "18h00 - 18h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+				{"horaire" : "18h10 - 18h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "18h20 - 18h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "18h30 - 18h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+				{"horaire" : "18h40 - 18h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+				{"horaire" : "19h00 - 19h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }, 
+				{"horaire" : "19h10 - 19h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "19h20 - 19h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "19h30 - 19h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "19h40 - 19h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "19h50 - 20h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "20h00 - 20h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "20h10 - 20h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "20h20 - 20h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "20h30 - 20h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "20h40 - 20h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "20h50 - 21h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "21h00 - 21h10", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "21h10 - 21h20", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "21h20 - 21h30", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "21h30 - 21h40", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "21h40 - 21h50", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 },
+				{"horaire" : "21h50 - 22h00", "disponibilité" : ["disponible", "disponible", "disponible", "disponible", "disponible", "disponible"], "count_indisponible" : 6 }
 			])
 		}
 		else{
 		data.map(resa => {
-
-			crenaux.map((creneau, idx_creneau) => {
-
+			crenaux.map((creneau,  idx_creneau) => {
+                creneau.count_indisponible = 6
 				let transform_debut = resa.attributes.debut_resa.split("T")[1].split(":")[0]+":"+resa.attributes.debut_resa.split("T")[1].split(":")[1]+":"+resa.attributes.debut_resa.split("T")[1].split(":")[2].split(".")[0];
-
+                 
 				// console.log(transform_debut, creneau.horaire.split(" - ")[0] + ":00", idx_creneau);
-				// console.log(creneau.horaire)
+
 				for(let i = 0; i < 6; i++){
 					let res = calcul_debut(creneau.horaire, i)
 					// console.log(res, transform_debut)
+                    
 					if (transform_debut == res) {
+
 						creneau.disponibilité.map((dispo, index_dispo) => {
+
 							if (index_dispo === i){
 								Object.keys(resa.attributes.pizzas_reserved).map(idx => {
 									if (index_dispo > 5){
 										index_dispo = 0;
 										idx_creneau += 1;	
 									}
-									crenaux1[idx_creneau].disponibilité[index_dispo] = "indisponible";
+									crenaux1[idx_creneau].disponibilité[index_dispo] = resa.attributes.pizzas_reserved[idx].pizza;
 									index_dispo += 1;
+									crenaux1[idx_creneau].count_indisponible -= 1 
 								})	
 							}
 						})
-					}
+					}				
 				}
 			})	
 		})
 		setCrenaux(crenaux1);
-	}
+    }
 	} 
 
 
@@ -217,11 +239,8 @@ const  Planning = () => {
 		if (dispo == "disponible"){
 			return "green";
 		}
-		else if (dispo == "indisponible"){
+		else {
 			return "red";
-		}
-		else{
-			return "grey";
 		}
 	}
 
@@ -300,7 +319,7 @@ const  Planning = () => {
 									return 
 								}
 								if( idx_creneau == 21){
-									if (dispo == "indisponible"){
+									if (dispo != "disponible"){
 										crenaux_indisponible += 1;
 									}
 									else {
@@ -308,7 +327,7 @@ const  Planning = () => {
 									}	
 								}
 								else {
-									if (crenaux[idx_creneau].disponibilité[index_dispo] == "indisponible"){
+									if (crenaux[idx_creneau].disponibilité[index_dispo] != "disponible"){
 										crenaux_indisponible += 1;
 									}
 									else {
@@ -328,7 +347,6 @@ const  Planning = () => {
 					})			
 				}
 			})
-			console.log(crenaux_indisponible, crenaux_disponible)
 			if (crenaux_indisponible > 0){
 				setCrenaux_disponible(crenaux_disponible);
 				setmodalisOpenFalse(true);
@@ -411,7 +429,7 @@ const  Planning = () => {
 		let difference = new Date(res) - new Date(tmp_data[0].attributes.fin_resa);
 		// divide the difference by 100 seconds
 		let secondeDifference = Math.floor(difference / 1000 / 100);
-		console.log(secondeDifference)
+		// console.log(secondeDifference)
 
 		// transform into minutes and seconds
 		// let minutes = Math.floor(difference / 1000 / 60);
@@ -451,7 +469,7 @@ const  Planning = () => {
 		, 3000);
 	}
 
-
+console.log(crenaux)
 	function updateById(datas, id){
 		axios({
 			method: 'put',
@@ -527,7 +545,7 @@ const  Planning = () => {
           				onChange={(e) => setDateQuery(e.target.value)}
           			/>
 
-					<input 
+					{/* <input 
 						type="time" id="appt" name="appt"
        					min="18:00" max="22:00"
 						onChange={(e) => onChangesetDateAvance(e.target.value)}
@@ -540,7 +558,7 @@ const  Planning = () => {
 						value={dateAvance2}
 						onChange={(e) => setAvance(e.target.value)}
 					/>
-					<button onClick={getDispo}>Avancer</button>
+					<button onClick={getDispo}>Avancer</button> */}
 					{modalisOpen && (
        					<div className="popup">
 							<div className="popup_container">		
@@ -611,6 +629,7 @@ const  Planning = () => {
 									<span>{creneau.horaire}</span>
 								</div>
 								<div className="planning_card_body">
+									<span>{creneau.count_indisponible}</span>
 									{creneau.disponibilité.map((dispo, i) => (
 										<div 
 											 onClick={() => onClickHandlerReservation(creneau.horaire, i, dispo)} 
