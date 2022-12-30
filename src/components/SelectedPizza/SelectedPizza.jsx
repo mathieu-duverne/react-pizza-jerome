@@ -132,7 +132,7 @@ const handleClick = (id) => {
               "taille" : pizza.size[pizza.id.indexOf(id)],
               "prix" : pizza.price[pizza.id.indexOf(id)],
               "quantity" : 1,
-              "note" : [note]
+              "note" : [note],
             }); 
           }
         })
@@ -344,8 +344,8 @@ const ClickSaveSelectedPizza = () => {
                       </div>
 
                         <div className="div-input-less">
-                          <span onClick={() => ClickPlusQuantity(display_pizzas_selected.id) } className="span-button">+</span>
-                          <span onClick={() => ClickLessQuantity(display_pizzas_selected.id) } className="span-button">-</span>
+                          {/* <span onClick={() => ClickPlusQuantity(display_pizzas_selected.id) } className="span-button">+</span>
+                          <span onClick={() => ClickLessQuantity(display_pizzas_selected.id) } className="span-button">-</span> */}
                           <span onClick={() => ClickSuppr(display_pizzas_selected.id) } className="span-button">X</span>
                         </div>
                       </div>
@@ -354,7 +354,7 @@ const ClickSaveSelectedPizza = () => {
                 </div>
 				
                 <div className="save-pizza-selected">
-                  <button onClick={() => ClickSaveSelectedPizza() } className="btn-save-pizza-selected">PLanifier</button>
+                  <button onClick={() => ClickSaveSelectedPizza() } className="btn-save-pizza-selected">Planifier</button>
                 </div>
 				      <span>{success_message}</span>
             </div>

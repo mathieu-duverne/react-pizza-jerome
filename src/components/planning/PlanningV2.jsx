@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { API } from "../constant";
-import { DefaultPlanning } from "./DefaultPlanning";
+import { DefaultPlanning, DefaultPlanningv2 } from "./DefaultPlanning";
 import { useState, useEffect} from 'react';
 import "./Planning.css"
 
@@ -9,6 +9,20 @@ const PlanningV2 = () => {
 	
 
     const [date, setDate] = useState(get_date_formated_today());
+	const [nbrpizza, setNbrPizza] = useState(0)
+
+	function get_nbr_Pizza(){
+		const date_of_day = new Date(date);
+    	const dayOfWeek = date_of_day.getDay();
+		console.log(dayOfWeek)
+		// vendredi == 5 | samedi == 6 | dimanche == 7
+		if (dayOfWeek == 5 || dayOfWeek == 6 || dayOfWeek == 0){
+			setNbrPizza(7)
+		}
+		else{
+			setNbrPizza(6)
+		}
+	}
 
 
 	// reformat date to dd/mm/yyyy
@@ -22,12 +36,15 @@ const PlanningV2 = () => {
 	}
     
 	const [crenaux, setCreneaux] = useState(DefaultPlanning)
+	const [crenaux1, setCreneaux1] = useState(DefaultPlanning)
 	const [lst_pizzas_reserved, set_lst_pizzas_reserved] = useState([])
 
 	useEffect(()=>{
         const loadReserved = async (date) => {
             const response = await axios.get(`${API}/reservations?filters[debut_resa][$containsi]=${date}`);
 			structured_planning_with_pizzas_reserved(response.data.data)
+			get_nbr_Pizza()
+			setCount(0)
         }
         loadReserved(date);
     }
@@ -74,10 +91,21 @@ const PlanningV2 = () => {
 		// Return the result
 		return result;
 	}
-    function structured_planning_with_pizzas_reserved(data_resarvation){
+
+	const [count, setCount] = useState()
+    function structured_planning_with_pizzas_reserved(data_reservation){
+		if(data_reservation.length < 1){
+			crenaux.map((crenau, i) => {
+				crenau.reservation = []
+				crenau.nbr_pizza_per_crenau = 0
+				set_lst_pizzas_reserved([])
+				
+			})
+
+		}
         crenaux.map((crenau, i) => {
 			let tmp_nbr_pizza = 0
-			data_resarvation.map((resa) => {
+			data_reservation.map((resa) => {
 				let debut_crenau = crenau.horaire.split("-")[0].replace("h", ":") + ":00"
 				const date_debut_crenau = convertToDate(debut_crenau)
 				let fin_crenau = crenau.horaire.split("-")[1].replace("h", ":") + ":00"
@@ -87,14 +115,16 @@ const PlanningV2 = () => {
 				let debut_resa = resa.attributes.debut_resa.split("T")[1].split(".")[0].replace(" ", "");
 				const date_debut_resa = convertToDate(debut_resa)
 				let fin_resa = resa.attributes.fin_resa.split("T")[1].split(".")[0].replace(" ", "");
+				// console.log(fin_resa)
 				const date_fin_resa = convertToDate(fin_resa)
-				
+				const max_date_fin_crenau = convertToDate("22:00:00")
+				// console.log(date_fin_resa)
+				// console.log(max_date_fin_crenau)
 				if(date_debut_crenau.getHours() === date_debut_resa.getHours() && date_debut_resa.getMinutes() >= date_debut_crenau.getMinutes() && date_fin_resa <= date_fin_crenau){
 					// if(crenau.reservation)
 					if(!lst_pizzas_reserved.includes(resa.id)){
 
 					let res = calculateDateDifference(date_debut_resa, date_fin_resa)
-					
 					resa.tmp_estimate = res.minutes+"m"+res.seconds+"s"
 					res = divideTime(res.minutes, res.seconds, 1, 40)
 					resa.nbrPizza = res
@@ -103,19 +133,38 @@ const PlanningV2 = () => {
 					crenau.reservation.push(resa)
 					crenau.nbr_pizza_per_crenau = tmp_nbr_pizza					
 					}
+
 				}	
+
+				// else if(date_debut_crenau.getHours() === date_debut_resa.getHours() && date_debut_crenau.getMinutes() <= date_debut_resa.getMinutes() && date_fin_resa <= max_date_fin_crenau && date_fin_resa.getHours() >= date_fin_crenau.getHours() || date_fin_resa.getMinutes() >= date_fin_crenau.getMinutes()){
+				// // 	if(!lst_pizzas_reserved.includes(resa.id)){
+				// // 	console.log("else if")
+				// // 	console.log(resa.id)
+				// // 	let res = calculateDateDifference(date_debut_resa, date_fin_resa)
+				// // 	resa.tmp_estimate = res.minutes+"m"+res.seconds+"s"
+				// // 	res = divideTime(res.minutes, res.seconds, 1, 40)
+				// // 	resa.nbrPizza = res
+				// // 	tmp_nbr_pizza += res
+				// // 	lst_pizzas_reserved.push(resa.id)
+				// // 	crenau.reservation.push(resa)
+				// // 	crenau.nbr_pizza_per_crenau = tmp_nbr_pizza	
+				// // }
+
+				// }
 			})
 		})
-		setCreneaux([...crenaux])
-    }
-	console.log(crenaux)
 
+		setCreneaux([...crenaux])
+		console.log(crenaux)
+		// setCount())
+
+
+    }
 	
 	const setDateQuery = (e) => {
 		console.log(e)
 		setDate(e);
 	}
-
 
 	return (
 		// display pizzas in card
@@ -141,7 +190,7 @@ const PlanningV2 = () => {
 									<span>{creneau.horaire}</span>
 									<span></span>
 								</div>
-								<span>{creneau.nbr_pizza_per_crenau}</span>
+								<span>{creneau.nbr_pizza_per_crenau > 0 ? nbrpizza - creneau.nbr_pizza_per_crenau : nbrpizza}</span>
 								{creneau.reservation.length != 0 ? (
 
         							<div style={{ border: "2px solid #ccc"}}>
